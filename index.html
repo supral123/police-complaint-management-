@@ -66,7 +66,10 @@ button:hover{
 main{flex:1;padding:28px;min-width:0}
 .page{display:none}
 .page.active{display:block;animation:fade .3s ease}
-@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
 h2{
   font-family:Orbitron,sans-serif;color:var(--cyan);
   font-size:22px;margin-top:0;
@@ -107,13 +110,12 @@ table{width:100%;border-collapse:collapse;margin-top:15px}
 th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
 th{color:var(--cyan)}
 .table-wrap{overflow-x:auto}
-.status{color:var(--green);font-weight:bold}
-footer{text-align:center;color:var(--muted);padding:25px}
-.small{font-size:14px;color:var(--muted)}
 .notice{
   border-left:3px solid var(--green);padding:12px;
   background:#00ff9d0c;color:var(--muted);margin-top:15px;
 }
+.small{font-size:14px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);padding:25px}
 @media(max-width:850px){
   .layout{display:block}
   .sidebar{width:100%;display:flex;overflow-x:auto;gap:5px}
@@ -143,223 +145,242 @@ footer{text-align:center;color:var(--muted);padding:25px}
 </header>
 
 <div class="layout">
-  <aside class="sidebar">
-    <button class="active" onclick="showPage('dashboard',this)"
-      data-en="▣ Dashboard" data-mr="▣ डॅशबोर्ड">▣ Dashboard</button>
+<aside class="sidebar">
+  <button class="active" onclick="showPage('dashboard',this)"
+    data-en="▣ Dashboard" data-mr="▣ डॅशबोर्ड">▣ Dashboard</button>
 
-    <button onclick="showPage('newComplaint',this)"
-      data-en="＋ New Complaint" data-mr="＋ नवीन तक्रार">＋ New Complaint</button>
+  <button onclick="showPage('newComplaint',this)"
+    data-en="＋ New Complaint" data-mr="＋ नवीन तक्रार">＋ New Complaint</button>
 
-    <button onclick="showPage('records',this)"
-      data-en="▤ Case Records" data-mr="▤ तक्रार नोंदी">▤ Case Records</button>
+  <button onclick="showPage('records',this)"
+    data-en="▤ Case Records" data-mr="▤ तक्रार नोंदी">▤ Case Records</button>
 
-    <button onclick="showPage('evidence',this)"
-      data-en="◈ Evidence" data-mr="◈ पुरावे">◈ Evidence</button>
+  <button onclick="showPage('evidence',this)"
+    data-en="◈ Evidence" data-mr="◈ पुरावे">◈ Evidence</button>
 
-    <button onclick="showPage('reports',this)"
-      data-en="▥ Reports" data-mr="▥ अहवाल">▥ Reports</button>
+  <button onclick="showPage('reports',this)"
+    data-en="▥ Reports" data-mr="▥ अहवाल">▥ Reports</button>
 
-    <button onclick="showPage('about',this)"
-      data-en="ⓘ About Project" data-mr="ⓘ प्रकल्प माहिती">ⓘ About Project</button>
-  </aside>
+  <button onclick="showPage('about',this)"
+    data-en="ⓘ About Project" data-mr="ⓘ प्रकल्प माहिती">ⓘ About Project</button>
+</aside>
 
-  <main>
-    <!-- DASHBOARD -->
-    <section id="dashboard" class="page active">
-      <h2 data-en="DASHBOARD OVERVIEW" data-mr="डॅशबोर्ड आढावा">DASHBOARD OVERVIEW</h2>
-      <p class="muted" data-en="System overview and quick operations"
-         data-mr="प्रणालीचा आढावा आणि जलद कार्यवाही">
-         System overview and quick operations
-      </p>
+<main>
 
-      <div class="cards">
-        <div class="card">
-          <h3 data-en="Total Complaints" data-mr="एकूण तक्रारी">Total Complaints</h3>
-          <div class="number" id="totalCount">0</div>
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+  <h2 data-en="DASHBOARD OVERVIEW" data-mr="डॅशबोर्ड आढावा">DASHBOARD OVERVIEW</h2>
+  <p class="muted" data-en="System overview and quick operations"
+     data-mr="प्रणालीचा आढावा आणि जलद कार्यवाही">
+     System overview and quick operations
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h3 data-en="Total Complaints" data-mr="एकूण तक्रारी">Total Complaints</h3>
+      <div class="number" id="totalCount">0</div>
+    </div>
+    <div class="card">
+      <h3 data-en="Pending Complaints" data-mr="प्रलंबित तक्रारी">Pending Complaints</h3>
+      <div class="number" id="pendingCount">0</div>
+    </div>
+    <div class="card">
+      <h3 data-en="Under Review" data-mr="पुनरावलोकन सुरू">Under Review</h3>
+      <div class="number" id="reviewCount">0</div>
+    </div>
+    <div class="card">
+      <h3 data-en="Resolved Complaints" data-mr="निकाली तक्रारी">Resolved Complaints</h3>
+      <div class="number" id="resolvedCount">0</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3 data-en="QUICK OPERATIONS" data-mr="जलद कार्यवाही">QUICK OPERATIONS</h3>
+    <div class="actions">
+      <button class="primary" onclick="showPage('newComplaint')"
+        data-en="+ REGISTER COMPLAINT" data-mr="+ तक्रार नोंदवा">
+        + REGISTER COMPLAINT
+      </button>
+      <button class="green" onclick="showPage('records')"
+        data-en="VIEW RECORDS" data-mr="नोंदी पहा">VIEW RECORDS</button>
+      <button onclick="downloadCSV()"
+        data-en="DOWNLOAD REPORT" data-mr="अहवाल डाउनलोड करा">DOWNLOAD REPORT</button>
+    </div>
+  </div>
+</section>
+
+<!-- NEW COMPLAINT -->
+<section id="newComplaint" class="page">
+  <h2 data-en="REGISTER NEW COMPLAINT" data-mr="नवीन तक्रार नोंदवा">
+    REGISTER NEW COMPLAINT
+  </h2>
+
+  <div class="panel">
+    <form id="complaintForm">
+
+      <div class="form-grid">
+        <div>
+          <label data-en="Complainant Name *" data-mr="तक्रारदाराचे नाव *">Complainant Name *</label>
+          <input id="complainantName" required maxlength="80"
+            placeholder="Enter complainant name">
         </div>
-        <div class="card">
-          <h3 data-en="Pending Complaints" data-mr="प्रलंबित तक्रारी">Pending Complaints</h3>
-          <div class="number" id="pendingCount">0</div>
+
+        <div>
+          <label data-en="Registered By *" data-mr="तक्रार नोंदवणाऱ्याचे नाव *">Registered By *</label>
+          <input id="registeredBy" required maxlength="80"
+            placeholder="Enter registering person's name">
         </div>
-        <div class="card">
-          <h3 data-en="Under Review" data-mr="पुनरावलोकन सुरू">Under Review</h3>
-          <div class="number" id="reviewCount">0</div>
+
+        <div>
+          <label data-en="Complaint Category *" data-mr="तक्रारीचा प्रकार *">Complaint Category *</label>
+          <select id="category" required>
+            <option value="">Select category</option>
+            <option>Cyber Crime</option>
+            <option>Online Fraud</option>
+            <option>Identity Theft</option>
+            <option>Social Media Related</option>
+            <option>Other</option>
+          </select>
         </div>
-        <div class="card">
-          <h3 data-en="Resolved Complaints" data-mr="निकाली तक्रारी">Resolved Complaints</h3>
-          <div class="number" id="resolvedCount">0</div>
+
+        <div>
+          <label data-en="Incident Date *" data-mr="घटनेची तारीख *">Incident Date *</label>
+          <input type="date" id="incidentDate" required>
         </div>
-      </div>
 
-      <div class="panel">
-        <h3 data-en="QUICK OPERATIONS" data-mr="जलद कार्यवाही">QUICK OPERATIONS</h3>
-        <div class="actions">
-          <button class="primary" onclick="showPage('newComplaint')"
-            data-en="+ REGISTER COMPLAINT" data-mr="+ तक्रार नोंदवा">
-            + REGISTER COMPLAINT
-          </button>
-          <button class="green" onclick="showPage('records')"
-            data-en="VIEW RECORDS" data-mr="नोंदी पहा">
-            VIEW RECORDS
-          </button>
-          <button onclick="downloadCSV()"
-            data-en="DOWNLOAD REPORT" data-mr="अहवाल डाउनलोड करा">
-            DOWNLOAD REPORT
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- NEW COMPLAINT -->
-    <section id="newComplaint" class="page">
-      <h2 data-en="REGISTER NEW DEMO COMPLAINT"
-          data-mr="नवीन डेमो तक्रार नोंदवा">
-          REGISTER NEW DEMO COMPLAINT
-      </h2>
-
-      <div class="panel">
-        <form id="complaintForm">
-          <div class="form-grid">
-            <div>
-              <label data-en="Demo Person Name" data-mr="डेमो व्यक्तीचे नाव">Demo Person Name</label>
-              <input id="personName" required placeholder="Example: Demo User">
-            </div>
-            <div>
-              <label data-en="Demo Contact Number" data-mr="डेमो संपर्क क्रमांक">Demo Contact Number</label>
-              <input id="contact" required placeholder="Example: 0000000000">
-            </div>
-            <div>
-              <label data-en="Demo Address" data-mr="डेमो पत्ता">Demo Address</label>
-              <input id="address" required placeholder="Demo address only">
-            </div>
-            <div>
-              <label data-en="Complaint Category" data-mr="तक्रारीचा प्रकार">Complaint Category</label>
-              <select id="category" required>
-                <option value="">Select category</option>
-                <option>Cyber Awareness Demo</option>
-                <option>Online Fraud Demo</option>
-                <option>Identity Theft Demo</option>
-                <option>Other Demo</option>
-              </select>
-            </div>
-            <div>
-              <label data-en="Incident Date" data-mr="घटनेची तारीख">Incident Date</label>
-              <input type="date" id="incidentDate" required>
-            </div>
-            <div>
-              <label data-en="Demo Status" data-mr="डेमो स्थिती">Demo Status</label>
-              <select id="status">
-                <option>Pending</option>
-                <option>Under Review</option>
-                <option>Resolved</option>
-              </select>
-            </div>
-          </div>
-
-          <label data-en="Demo Description" data-mr="डेमो वर्णन">Demo Description</label>
-          <textarea id="description" required
-            placeholder="Enter fictional demo information only"></textarea>
-
-          <p class="small">Do not enter real complainant details or real case information.</p>
-
-          <button class="primary" type="submit"
-            data-en="SUBMIT DEMO COMPLAINT" data-mr="डेमो तक्रार सबमिट करा">
-            SUBMIT DEMO COMPLAINT
-          </button>
-        </form>
-        <div id="formMessage" class="notice" hidden></div>
-      </div>
-    </section>
-
-    <!-- RECORDS -->
-    <section id="records" class="page">
-      <h2 data-en="DEMO CASE RECORDS" data-mr="डेमो तक्रार नोंदी">DEMO CASE RECORDS</h2>
-      <div class="panel">
-        <label data-en="Search by ID or name" data-mr="आयडी किंवा नावाने शोधा">Search by ID or name</label>
-        <input id="searchBox" oninput="renderRecords()"
-          placeholder="Search demo records...">
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th><th>Name</th><th>Category</th>
-                <th>Date</th><th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="recordsBody">
-              <tr><td colspan="5">No demo records yet.</td></tr>
-            </tbody>
-          </table>
+        <div>
+          <label data-en="Complaint Status" data-mr="तक्रारीची स्थिती">Complaint Status</label>
+          <select id="status">
+            <option>Pending</option>
+            <option>Under Review</option>
+            <option>Resolved</option>
+          </select>
         </div>
       </div>
-    </section>
 
-    <!-- EVIDENCE -->
-    <section id="evidence" class="page">
-      <h2 data-en="EVIDENCE INFORMATION" data-mr="पुराव्याची माहिती">EVIDENCE INFORMATION</h2>
-      <div class="panel">
-        <h3>Digital Evidence - Learning Module</h3>
-        <p class="muted">
-          This demonstration page explains digital evidence concepts.
-          It does not accept, upload, or store evidence files.
-        </p>
-        <ul>
-          <li>Preserve original evidence without alteration.</li>
-          <li>Document the source and handling history.</li>
-          <li>Use authorized forensic procedures.</li>
-          <li>Maintain evidence integrity and access records.</li>
-        </ul>
-        <div class="notice">
-          Do not upload real photographs, documents, device data, or evidence to this demo website.
-        </div>
-      </div>
-    </section>
+      <label data-en="Complaint Description (Optional)"
+        data-mr="तक्रारीचे वर्णन (ऐच्छिक)">
+        Complaint Description (Optional)
+      </label>
+      <textarea id="description" maxlength="1000"
+        placeholder="Enter description if available (optional)"></textarea>
 
-    <!-- REPORTS -->
-    <section id="reports" class="page">
-      <h2 data-en="REPORTS AND EXPORT" data-mr="अहवाल आणि निर्यात">REPORTS AND EXPORT</h2>
-      <div class="panel">
-        <h3 data-en="Demo Report" data-mr="डेमो अहवाल">Demo Report</h3>
-        <p class="muted" data-en="Download the fictional records entered in this browser session."
-           data-mr="या ब्राउझर सत्रातील काल्पनिक नोंदी डाउनलोड करा.">
-          Download the fictional records entered in this browser session.
-        </p>
-        <button class="primary" onclick="downloadCSV()"
-          data-en="DOWNLOAD CSV REPORT" data-mr="CSV अहवाल डाउनलोड करा">
-          DOWNLOAD CSV REPORT
-        </button>
-      </div>
-    </section>
+      <p class="small">* Required fields. Description is optional.</p>
 
-    <!-- ABOUT -->
-    <section id="about" class="page">
-      <h2 data-en="ABOUT THIS PROJECT" data-mr="या प्रकल्पाबद्दल">ABOUT THIS PROJECT</h2>
-      <div class="panel">
-        <h3>Police Complaint Management System</h3>
-        <p>
-          A student learning prototype demonstrating a complaint dashboard,
-          sample registration form, record search and report export.
-        </p>
-        <p class="muted">
-          This is not an official police system. It has no authentication,
-          secure database, access control, or evidence management.
-        </p>
-      </div>
-    </section>
-  </main>
+      <button class="primary" type="submit"
+        data-en="SUBMIT COMPLAINT" data-mr="तक्रार सबमिट करा">
+        SUBMIT COMPLAINT
+      </button>
+    </form>
+
+    <div id="formMessage" class="notice" hidden></div>
+  </div>
+</section>
+
+<!-- RECORDS -->
+<section id="records" class="page">
+  <h2 data-en="COMPLAINT RECORDS" data-mr="तक्रार नोंदी">COMPLAINT RECORDS</h2>
+
+  <div class="panel">
+    <label data-en="Search by ID or name" data-mr="आयडी किंवा नावाने शोधा">
+      Search by ID or name
+    </label>
+    <input id="searchBox" oninput="renderRecords()"
+      placeholder="Search complaint records...">
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Complainant</th>
+            <th>Registered By</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="recordsBody">
+          <tr><td colspan="6">No records yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- EVIDENCE -->
+<section id="evidence" class="page">
+  <h2 data-en="EVIDENCE INFORMATION" data-mr="पुराव्याची माहिती">
+    EVIDENCE INFORMATION
+  </h2>
+  <div class="panel">
+    <h3>Digital Evidence - Learning Module</h3>
+    <p class="muted">
+      This section provides information about digital evidence handling.
+      It does not accept or store evidence files.
+    </p>
+    <ul>
+      <li>Preserve original evidence without alteration.</li>
+      <li>Document the source and handling history.</li>
+      <li>Follow authorized forensic procedures.</li>
+      <li>Maintain evidence integrity and access records.</li>
+    </ul>
+    <div class="notice">
+      Do not upload real case files or personal evidence to this website.
+    </div>
+  </div>
+</section>
+
+<!-- REPORTS -->
+<section id="reports" class="page">
+  <h2 data-en="REPORTS AND EXPORT" data-mr="अहवाल आणि निर्यात">
+    REPORTS AND EXPORT
+  </h2>
+  <div class="panel">
+    <h3 data-en="Complaint Report" data-mr="तक्रार अहवाल">Complaint Report</h3>
+    <p class="muted">
+      Download the records entered during this browser session.
+    </p>
+    <button class="primary" onclick="downloadCSV()"
+      data-en="DOWNLOAD CSV REPORT" data-mr="CSV अहवाल डाउनलोड करा">
+      DOWNLOAD CSV REPORT
+    </button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="page">
+  <h2 data-en="ABOUT THIS PROJECT" data-mr="या प्रकल्पाबद्दल">
+    ABOUT THIS PROJECT
+  </h2>
+  <div class="panel">
+    <h3>Police Complaint Management System</h3>
+    <p>
+      A student learning prototype demonstrating complaint registration,
+      complaint records, search, dashboard statistics and report export.
+    </p>
+    <p class="muted">
+      This is not an official police system. It has no login security,
+      secure database, access control or evidence management.
+    </p>
+  </div>
+</section>
+
+</main>
 </div>
 
-<footer>
-  CYBER POLICE CMS | STUDENT DEMO PROJECT
-</footer>
+<footer>CYBER POLICE CMS | STUDENT PROJECT</footer>
 
 <script>
-// Demo records exist only while this page remains open.
+"use strict";
+
+// Records are held only in browser memory.
+// Refreshing the page clears the records.
 let complaints = [];
 let nextId = 1;
 let currentLanguage = "en";
 
-// NAVIGATION FUNCTION
+// NAVIGATION
 function showPage(pageId, clickedButton) {
   document.querySelectorAll(".page").forEach(page => {
     page.classList.remove("active");
@@ -388,47 +409,47 @@ function showPage(pageId, clickedButton) {
   if (pageId === "records") renderRecords();
 }
 
-// LANGUAGE FUNCTION
+// LANGUAGE SWITCH
 function toggleLanguages() {
   currentLanguage = currentLanguage === "en" ? "mr" : "en";
 
   document.querySelectorAll("[data-en]").forEach(element => {
-    const translated = element.getAttribute(
+    const value = element.getAttribute(
       currentLanguage === "en" ? "data-en" : "data-mr"
     );
-    if (translated !== null) element.textContent = translated;
+    if (value !== null) element.textContent = value;
   });
 
   document.getElementById("languageButton").textContent =
     currentLanguage === "en" ? "मराठी" : "English";
 }
 
-// FORM SUBMISSION
+// REGISTER COMPLAINT
 document.getElementById("complaintForm").addEventListener("submit", function(event) {
   event.preventDefault();
 
   const complaint = {
-    id: "DEMO-" + String(nextId++).padStart(4, "0"),
-    name: document.getElementById("personName").value.trim(),
-    contact: document.getElementById("contact").value.trim(),
-    address: document.getElementById("address").value.trim(),
+    id: "CMP-" + String(nextId++).padStart(4, "0"),
+    complainant: document.getElementById("complainantName").value.trim(),
+    registeredBy: document.getElementById("registeredBy").value.trim(),
     category: document.getElementById("category").value,
     date: document.getElementById("incidentDate").value,
     status: document.getElementById("status").value,
     description: document.getElementById("description").value.trim()
   };
 
-  if (!complaint.name || !complaint.contact || !complaint.address ||
-      !complaint.category || !complaint.date || !complaint.description) {
+  if (!complaint.complainant || !complaint.registeredBy ||
+      !complaint.category || !complaint.date) {
     alert("Please complete all required fields.");
     return;
   }
 
   complaints.push(complaint);
 
-  document.getElementById("formMessage").hidden = false;
-  document.getElementById("formMessage").textContent =
-    "Demo complaint registered successfully. Demo ID: " + complaint.id;
+  const message = document.getElementById("formMessage");
+  message.hidden = false;
+  message.textContent =
+    "Complaint registered successfully. Reference ID: " + complaint.id;
 
   this.reset();
   updateDashboard();
@@ -438,35 +459,53 @@ document.getElementById("complaintForm").addEventListener("submit", function(eve
 // DASHBOARD COUNTS
 function updateDashboard() {
   document.getElementById("totalCount").textContent = complaints.length;
+
   document.getElementById("pendingCount").textContent =
     complaints.filter(c => c.status === "Pending").length;
+
   document.getElementById("reviewCount").textContent =
     complaints.filter(c => c.status === "Under Review").length;
+
   document.getElementById("resolvedCount").textContent =
     complaints.filter(c => c.status === "Resolved").length;
 }
 
-// CASE RECORDS
+// DISPLAY RECORDS
 function renderRecords() {
   const body = document.getElementById("recordsBody");
-  const search = (document.getElementById("searchBox")?.value || "").toLowerCase();
+  const search = (
+    document.getElementById("searchBox")?.value || ""
+  ).toLowerCase();
 
   const filtered = complaints.filter(c =>
     c.id.toLowerCase().includes(search) ||
-    c.name.toLowerCase().includes(search)
+    c.complainant.toLowerCase().includes(search) ||
+    c.registeredBy.toLowerCase().includes(search)
   );
 
+  body.replaceChildren();
+
   if (filtered.length === 0) {
-    body.innerHTML = '<tr><td colspan="5">No matching demo records found.</td></tr>';
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 6;
+    cell.textContent = "No matching records found.";
+    row.appendChild(cell);
+    body.appendChild(row);
     return;
   }
-
-  body.innerHTML = "";
 
   filtered.forEach(c => {
     const row = document.createElement("tr");
 
-    [c.id, c.name, c.category, c.date, c.status].forEach(value => {
+    [
+      c.id,
+      c.complainant,
+      c.registeredBy,
+      c.category,
+      c.date,
+      c.status
+    ].forEach(value => {
       const cell = document.createElement("td");
       cell.textContent = value;
       row.appendChild(cell);
@@ -476,20 +515,36 @@ function renderRecords() {
   });
 }
 
-// CSV REPORT
+// DOWNLOAD CSV
 function downloadCSV() {
   if (complaints.length === 0) {
-    alert("There are no demo records to download yet.");
+    alert("No complaint records available to download.");
     return;
   }
 
-  const columns = ["ID","Name","Contact","Address","Category","Date","Status","Description"];
+  const columns = [
+    "Complaint ID",
+    "Complainant Name",
+    "Registered By",
+    "Category",
+    "Incident Date",
+    "Status",
+    "Description"
+  ];
+
   const rows = complaints.map(c => [
-    c.id,c.name,c.contact,c.address,c.category,c.date,c.status,c.description
+    c.id,
+    c.complainant,
+    c.registeredBy,
+    c.category,
+    c.date,
+    c.status,
+    c.description
   ]);
 
-  const csvCell = value =>
-    '"' + String(value ?? "").replace(/"/g, '""') + '"';
+  function csvCell(value) {
+    return '"' + String(value ?? "").replace(/"/g, '""') + '"';
+  }
 
   const csv = [columns, ...rows]
     .map(row => row.map(csvCell).join(","))
@@ -502,14 +557,14 @@ function downloadCSV() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "demo-complaint-report.csv";
+  link.download = "complaint-report.csv";
   document.body.appendChild(link);
   link.click();
   link.remove();
   URL.revokeObjectURL(url);
 }
 
-// MATRIX BACKGROUND EFFECT
+// MATRIX BACKGROUND
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 let drops = [];
@@ -517,6 +572,7 @@ let drops = [];
 function resizeMatrix() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+
   const columns = Math.floor(canvas.width / 18);
   drops = Array(columns).fill(1);
 }
@@ -528,8 +584,7 @@ function drawMatrix() {
   ctx.font = "15px monospace";
 
   drops.forEach((y, index) => {
-    const character = Math.random() > 0.5 ? "1" : "0";
-    ctx.fillText(character, index * 18, y * 18);
+    ctx.fillText(Math.random() > 0.5 ? "1" : "0", index * 18, y * 18);
 
     if (y * 18 > canvas.height && Math.random() > 0.975) {
       drops[index] = 0;
@@ -542,7 +597,7 @@ window.addEventListener("resize", resizeMatrix);
 resizeMatrix();
 setInterval(drawMatrix, 70);
 
-// INITIAL PAGE SETUP
+// INITIALIZE
 updateDashboard();
 </script>
 </body>
