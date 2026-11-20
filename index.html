@@ -3,956 +3,547 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Police | Complaint Management System</title>
 
-<title>CYBER POLICE | Complaint Management System</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg: #050b12;
-  --panel: #0b1723;
-  --panel2: #102333;
-  --cyan: #00eaff;
-  --green: #00ff9d;
-  --text: #d8f5ff;
-  --muted: #83a6b7;
-  --border: #124052;
+  --bg:#050b14;
+  --panel:#0b1725;
+  --panel2:#102238;
+  --cyan:#00eaff;
+  --green:#00ff9d;
+  --text:#e8f5ff;
+  --muted:#8ba5b9;
+  --border:#173b52;
+  --red:#ff5268;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:'Rajdhani',sans-serif;font-size:18px;
+}
+#matrix{
+  position:fixed;inset:0;width:100%;height:100%;
+  opacity:.12;pointer-events:none;z-index:-1;
+}
+header{
+  background:#081522;border-bottom:1px solid var(--cyan);
+  padding:18px 25px;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;flex-wrap:wrap;
+  box-shadow:0 0 20px #00eaff22;
+}
+.brand h1{
+  font-family:Orbitron,sans-serif;font-size:21px;
+  color:var(--cyan);margin:0;
+}
+.brand p{margin:5px 0 0;color:var(--muted)}
+button{
+  cursor:pointer;border:1px solid var(--cyan);
+  background:#10283b;color:var(--cyan);
+  padding:10px 16px;border-radius:6px;
+  font-family:inherit;font-size:17px;font-weight:700;
+  transition:.2s;
+}
+button:hover{
+  background:var(--cyan);color:#00111c;
+  box-shadow:0 0 15px #00eaff88;
+}
+.layout{display:flex;min-height:calc(100vh - 90px)}
+.sidebar{
+  width:230px;flex-shrink:0;background:#081522;
+  border-right:1px solid var(--border);padding:20px 12px;
+}
+.sidebar button{
+  display:block;width:100%;text-align:left;margin-bottom:10px;
+  border-color:transparent;background:transparent;color:var(--muted);
+}
+.sidebar button.active,.sidebar button:hover{
+  color:var(--cyan);border-color:var(--cyan);
+  background:#10283b;
+}
+main{flex:1;padding:28px;min-width:0}
+.page{display:none}
+.page.active{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+h2{
+  font-family:Orbitron,sans-serif;color:var(--cyan);
+  font-size:22px;margin-top:0;
+}
+h3{color:var(--green)}
+.muted{color:var(--muted)}
+.cards{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;margin:22px 0;
+}
+.card{
+  background:linear-gradient(145deg,#102238,#091522);
+  border:1px solid var(--border);border-radius:10px;
+  padding:20px;box-shadow:0 0 14px #00eaff12;
+}
+.card h3{font-size:16px;margin:0 0 12px;color:var(--muted)}
+.number{font-family:Orbitron,sans-serif;font-size:30px;color:var(--green)}
+.panel{
+  background:#0b1725;border:1px solid var(--border);
+  border-radius:10px;padding:22px;margin-top:20px;
+}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+label{display:block;color:var(--cyan);margin:13px 0 5px}
+input,select,textarea{
+  width:100%;padding:12px;background:#07111c;
+  color:var(--text);border:1px solid #24506a;
+  border-radius:6px;font-family:inherit;font-size:17px;
+}
+textarea{min-height:100px;resize:vertical}
+input:focus,select:focus,textarea:focus{
+  outline:1px solid var(--cyan);box-shadow:0 0 8px #00eaff44;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.primary{background:#00c9dc;color:#00111c;border-color:#00eaff}
+.green{border-color:var(--green);color:var(--green)}
+.danger{border-color:var(--red);color:var(--red)}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--cyan)}
+.table-wrap{overflow-x:auto}
+.status{color:var(--green);font-weight:bold}
+footer{text-align:center;color:var(--muted);padding:25px}
+.small{font-size:14px;color:var(--muted)}
+.notice{
+  border-left:3px solid var(--green);padding:12px;
+  background:#00ff9d0c;color:var(--muted);margin-top:15px;
+}
+@media(max-width:850px){
+  .layout{display:block}
+  .sidebar{width:100%;display:flex;overflow-x:auto;gap:5px}
+  .sidebar button{min-width:max-content;width:auto}
+  main{padding:18px}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:500px){
+  .cards,.form-grid{grid-template-columns:1fr}
+  .brand h1{font-size:16px}
 }
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Rajdhani', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* MATRIX BACKGROUND */
-
-#matrix {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: .12;
-  pointer-events: none;
-  z-index: 0;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  opacity: .08;
-  background: repeating-linear-gradient(
-    transparent 0px,
-    transparent 3px,
-    #00eaff 4px
-  );
-}
-
-/* MAIN LAYOUT */
-
-.app {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  min-height: 100vh;
-}
-
-.sidebar {
-  width: 255px;
-  background: #081522;
-  border-right: 1px solid var(--border);
-  padding: 24px 15px;
-  flex-shrink: 0;
-}
-
-.brand {
-  text-align: center;
-  padding: 12px 5px 25px;
-  border-bottom: 1px solid var(--border);
-}
-
-.brand-icon {
-  font-size: 38px;
-  color: var(--green);
-  text-shadow: 0 0 20px var(--green);
-}
-
-.brand h2 {
-  font-family: Orbitron, sans-serif;
-  font-size: 16px;
-  color: var(--cyan);
-  margin: 10px 0;
-}
-
-.brand p {
-  color: var(--green);
-  font-size: 12px;
-  letter-spacing: 2px;
-}
-
-.menu-title {
-  color: #57798a;
-  font-size: 12px;
-  letter-spacing: 2px;
-  margin: 25px 12px 10px;
-}
-
-.nav-btn {
-  display: flex;
-  width: 100%;
-  gap: 12px;
-  align-items: center;
-  padding: 13px;
-  margin: 7px 0;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  color: #a9c9d8;
-  font-family: inherit;
-  font-size: 17px;
-  text-align: left;
-  cursor: pointer;
-  transition: .3s;
-}
-
-.nav-btn:hover,
-.nav-btn.active {
-  color: var(--green);
-  background: #00ff9d12;
-  border-color: #00ff9d55;
-  box-shadow: 0 0 15px #00ff9d15;
-}
-
-.nav-icon {
-  font-size: 19px;
-  width: 25px;
-  text-align: center;
-}
-
-.sidebar-bottom {
-  margin-top: 45px;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.online-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background: var(--green);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--green);
-  margin-right: 7px;
-}
-
-/* MAIN CONTENT */
-
-.main {
-  flex: 1;
-  min-width: 0;
-}
-
-.topbar {
-  min-height: 78px;
-  background: #091725ed;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 25px;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.topbar h2 {
-  margin: 0;
-  font-family: Orbitron, sans-serif;
-  font-size: 16px;
-  color: var(--cyan);
-}
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.clock {
-  color: var(--green);
-  font-family: Orbitron, sans-serif;
-  font-size: 12px;
-}
-
-.lang-btn {
-  background: #0c2c39;
-  color: var(--green);
-  border: 1px solid var(--green);
-  padding: 9px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.content {
-  padding: 25px;
-  max-width: 1450px;
-  margin: auto;
-}
-
-.page {
-  display: none;
-  animation: appear .4s ease;
-}
-
-.page.active {
-  display: block;
-}
-
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* HEADINGS */
-
-.page-heading {
-  font-family: Orbitron, sans-serif;
-  font-size: 21px;
-  color: var(--cyan);
-  margin-bottom: 8px;
-}
-
-.subheading {
-  color: var(--muted);
-  margin-bottom: 25px;
-}
-
-/* BUTTONS */
-
-.btn {
-  border: 1px solid var(--cyan);
-  background: #062333;
-  color: var(--cyan);
-  padding: 12px 17px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: Orbitron, sans-serif;
-  font-size: 11px;
-  transition: .3s;
-  margin: 4px;
-}
-
-.btn:hover {
-  background: var(--cyan);
-  color: #00121b;
-  box-shadow: 0 0 15px var(--cyan), 0 0 30px #00eaff44;
-  transform: translateY(-3px);
-}
-
-.btn-green {
-  border-color: var(--green);
-  color: var(--green);
-  background: #063126;
-}
-
-.btn-green:hover {
-  background: var(--green);
-  color: #00140b;
-  box-shadow: 0 0 18px var(--green);
-}
-
-.btn-red {
-  border-color: #ff536b;
-  color: #ff7586;
-  background: #35131b;
-}
-
-/* STATISTICS */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 17px;
-  margin: 25px 0;
-}
-
-.stat-card {
-  background: linear-gradient(145deg, #102638, #091522);
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  padding: 23px;
-  transition: .3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-card:hover {
-  border-color: var(--green);
-  transform: translateY(-5px);
-  box-shadow: 0 0 20px #00ff9d22;
-}
-
-.stat-card::after {
-  content: "";
-  position: absolute;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: var(--green);
-  box-shadow: 0 0 12px var(--green);
-}
-
-.stat-label {
-  color: var(--muted);
-  font-size: 15px;
-}
-
-.stat-number {
-  font-family: Orbitron, sans-serif;
-  font-size: 30px;
-  margin-top: 13px;
-  color: var(--green);
-  text-shadow: 0 0 12px #00ff9d66;
-}
-
-.stat-icon {
-  float: right;
-  font-size: 25px;
-}
-
-/* PANELS */
-
-.panel {
-  background: linear-gradient(145deg, #0c1c2a, #091522);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 23px;
-  margin-top: 20px;
-  box-shadow: 0 0 15px #00eaff08;
-}
-
-.panel h3 {
-  color: var(--cyan);
-  font-family: Orbitron, sans-serif;
-  font-size: 15px;
-  margin-top: 0;
-}
-
-/* FORMS */
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px 20px;
-}
-
-.field {
-  margin-bottom: 13px;
-}
-
-.field.full {
-  grid-column: 1 / -1;
-}
-
-label {
-  display: block;
-  margin-bottom: 7px;
-  color: #70dcec;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-input, textarea, select {
-  width: 100%;
-  background: #06131e;
-  color: var(--text);
-  border: 1px solid #1a5264;
-  border-radius: 6px;
-  padding: 13px;
-  font-family: inherit;
-  font-size: 16px;
-  outline: none;
-}
-
-input:focus, textarea:focus, select:focus {
-  border-color: var(--green);
-  box-shadow: 0 0 12px #00ff9d22;
-}
-
-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-input[type=file] {
-  font-size: 13px;
-}
-
-/* TABLE */
-
-.table-wrap {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  min-width: 650px;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 13px;
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-}
-
-th {
-  background: #102c3d;
-  color: var(--cyan);
-}
-
-td {
-  color: #c1e2ed;
-}
-
-.status {
-  display: inline-block;
-  background: #07372b;
-  color: var(--green);
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 12px;
-}
-
-.status.review {
-  background: #352c0b;
-  color: #ffdb70;
-}
-
-.status.resolved {
-  background: #103049;
-  color: var(--cyan);
-}
-
-/* INFORMATION */
-
-.notice {
-  padding: 15px;
-  border-left: 3px solid var(--green);
-  background: #0c2726;
-  color: #a9e9d1;
-  border-radius: 5px;
-  line-height: 1.6;
-  font-size: 14px;
-}
-
-.empty {
-  color: var(--muted);
-  text-align: center;
-  padding: 25px;
-}
-
-footer {
-  text-align: center;
-  color: #557d8b;
-  padding: 25px;
-  border-top: 1px solid var(--border);
-  margin-top: 30px;
-  font-size: 13px;
-}
-
-/* MOBILE */
-
-@media(max-width:950px) {
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media(max-width:650px) {
-  .app {
-    display: block;
-  }
-
-  .sidebar {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .brand {
-    padding: 8px;
-  }
-
-  .brand-icon {
-    font-size: 25px;
-  }
-
-  .sidebar nav {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4px;
-  }
-
-  .menu-title, .sidebar-bottom {
-    display: none;
-  }
-
-  .nav-btn {
-    font-size: 14px;
-    padding: 10px 6px;
-    margin: 2px;
-  }
-
-  .topbar {
-    padding: 13px;
-  }
-
-  .content {
-    padding: 12px;
-  }
-
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
-  }
-
-  .stat-card {
-    padding: 14px;
-  }
-
-  .stat-number {
-    font-size: 23px;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .field.full {
-    grid-column: auto;
-  }
-
-  .panel {
-    padding: 15px;
-  }
-}
-
-@media(max-width:370px) {
-  .stats {
-    grid-template-columns: 1fr;
-  }
-}
-
 </style>
 </head>
 
 <body>
-
 <canvas id="matrix"></canvas>
 
-<div class="app">
-
-<!-- SIDEBAR -->
-
-<aside class="sidebar">
-
+<header>
   <div class="brand">
-    <div class="brand-icon">⬡</div>
-    <h2>CYBER POLICE</h2>
-    <p>COMMAND SYSTEM</p>
+    <h1>CYBER POLICE | CMS</h1>
+    <p data-en="Police Complaint Management System"
+       data-mr="पोलीस तक्रार व्यवस्थापन प्रणाली">
+       Police Complaint Management System
+    </p>
   </div>
+  <button onclick="toggleLanguages()" id="languageButton">मराठी</button>
+</header>
 
-  <div class="menu-title" id="menuTitle">MAIN MENU</div>
+<div class="layout">
+  <aside class="sidebar">
+    <button class="active" onclick="showPage('dashboard',this)"
+      data-en="▣ Dashboard" data-mr="▣ डॅशबोर्ड">▣ Dashboard</button>
 
-  <nav>
+    <button onclick="showPage('newComplaint',this)"
+      data-en="＋ New Complaint" data-mr="＋ नवीन तक्रार">＋ New Complaint</button>
 
-    <button class="nav-btn active" onclick="showPage('dashboard',this)">
-      <span class="nav-icon">⌂</span>
-      <span data-en="Dashboard" data-mr="डॅशबोर्ड">Dashboard</span>
-    </button>
+    <button onclick="showPage('records',this)"
+      data-en="▤ Case Records" data-mr="▤ तक्रार नोंदी">▤ Case Records</button>
 
-    <button class="nav-btn" onclick="showPage('register',this)">
-      <span class="nav-icon">＋</span>
-      <span data-en="New Complaint" data-mr="नवीन तक्रार">New Complaint</span>
-    </button>
+    <button onclick="showPage('evidence',this)"
+      data-en="◈ Evidence" data-mr="◈ पुरावे">◈ Evidence</button>
 
-    <button class="nav-btn" onclick="showPage('records',this)">
-      <span class="nav-icon">▤</span>
-      <span data-en="Case Records" data-mr="तक्रारींची नोंद">Case Records</span>
-    </button>
+    <button onclick="showPage('reports',this)"
+      data-en="▥ Reports" data-mr="▥ अहवाल">▥ Reports</button>
 
-    <button class="nav-btn" onclick="showPage('evidence',this)">
-      <span class="nav-icon">◈</span>
-      <span data-en="Evidence" data-mr="पुरावे">Evidence</span>
-    </button>
+    <button onclick="showPage('about',this)"
+      data-en="ⓘ About Project" data-mr="ⓘ प्रकल्प माहिती">ⓘ About Project</button>
+  </aside>
 
-    <button class="nav-btn" onclick="showPage('reports',this)">
-      <span class="nav-icon">▥</span>
-      <span data-en="Reports" data-mr="अहवाल">Reports</span>
-    </button>
-
-    <button class="nav-btn" onclick="showPage('about',this)">
-      <span class="nav-icon">ⓘ</span>
-      <span data-en="About Project" data-mr="प्रकल्प माहिती">About Project</span>
-    </button>
-
-  </nav>
-
-  <div class="sidebar-bottom">
-    <p><span class="online-dot"></span>DEMO SYSTEM ONLINE</p>
-    <p>Version 1.0</p>
-    <p>Cyber Security Interface</p>
-  </div>
-
-</aside>
-
-<!-- MAIN -->
-
-<main class="main">
-
-  <div class="topbar">
-
-    <h2 id="topTitle">CYBER OPERATIONS CENTER</h2>
-
-    <div class="topbar-right">
-      <div class="clock" id="clock">SYSTEM ACTIVE</div>
-      <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">
-        मराठी
-      </button>
-    </div>
-
-  </div>
-
-  <div class="content">
-
+  <main>
     <!-- DASHBOARD -->
-
-    <section class="page active" id="dashboard">
-
-      <h2 class="page-heading" data-en="SYSTEM DASHBOARD" data-mr="सिस्टम डॅशबोर्ड">
-        SYSTEM DASHBOARD
-      </h2>
-
-      <p class="subheading" data-en="Police Complaint Monitoring Interface" data-mr="पोलीस तक्रार निरीक्षण प्रणाली">
-        Police Complaint Monitoring Interface
+    <section id="dashboard" class="page active">
+      <h2 data-en="DASHBOARD OVERVIEW" data-mr="डॅशबोर्ड आढावा">DASHBOARD OVERVIEW</h2>
+      <p class="muted" data-en="System overview and quick operations"
+         data-mr="प्रणालीचा आढावा आणि जलद कार्यवाही">
+         System overview and quick operations
       </p>
 
-      <div class="stats">
-
-        <div class="stat-card">
-          <span class="stat-icon">▤</span>
-          <div class="stat-label" data-en="Total Complaints" data-mr="एकूण तक्रारी">Total Complaints</div>
-          <div class="stat-number" id="total">0</div>
+      <div class="cards">
+        <div class="card">
+          <h3 data-en="Total Complaints" data-mr="एकूण तक्रारी">Total Complaints</h3>
+          <div class="number" id="totalCount">0</div>
         </div>
-
-        <div class="stat-card">
-          <span class="stat-icon">◷</span>
-          <div class="stat-label" data-en="Pending" data-mr="प्रलंबित">Pending</div>
-          <div class="stat-number" id="pending">0</div>
+        <div class="card">
+          <h3 data-en="Pending Complaints" data-mr="प्रलंबित तक्रारी">Pending Complaints</h3>
+          <div class="number" id="pendingCount">0</div>
         </div>
-
-        <div class="stat-card">
-          <span class="stat-icon">⌕</span>
-          <div class="stat-label" data-en="Under Review" data-mr="तपासणी सुरू">Under Review</div>
-          <div class="stat-number" id="review">0</div>
+        <div class="card">
+          <h3 data-en="Under Review" data-mr="पुनरावलोकन सुरू">Under Review</h3>
+          <div class="number" id="reviewCount">0</div>
         </div>
-
-        <div class="stat-card">
-          <span class="stat-icon">✓</span>
-          <div class="stat-label" data-en="Resolved" data-mr="निकाली">Resolved</div>
-          <div class="stat-number" id="resolved">0</div>
+        <div class="card">
+          <h3 data-en="Resolved Complaints" data-mr="निकाली तक्रारी">Resolved Complaints</h3>
+          <div class="number" id="resolvedCount">0</div>
         </div>
-
       </div>
 
       <div class="panel">
-        <h3 data-en="QUICK OPERATIONS" data-mr="जलद पर्याय">QUICK OPERATIONS</h3>
-
-        <button class="btn btn-green" onclick="showPage('register')">
-          + REGISTER COMPLAINT
-        </button>
-
-        <button class="btn" onclick="showPage('records')">
-          VIEW RECORDS
-        </button>
-      </div>
-
-      <div class="panel">
-        <h3 data-en="SYSTEM INFORMATION" data-mr="सिस्टम माहिती">SYSTEM INFORMATION</h3>
-
-        <div class="notice">
-          This is a demonstration project. All information entered is temporary and fictional.
-          No actual police records are connected.
+        <h3 data-en="QUICK OPERATIONS" data-mr="जलद कार्यवाही">QUICK OPERATIONS</h3>
+        <div class="actions">
+          <button class="primary" onclick="showPage('newComplaint')"
+            data-en="+ REGISTER COMPLAINT" data-mr="+ तक्रार नोंदवा">
+            + REGISTER COMPLAINT
+          </button>
+          <button class="green" onclick="showPage('records')"
+            data-en="VIEW RECORDS" data-mr="नोंदी पहा">
+            VIEW RECORDS
+          </button>
+          <button onclick="downloadCSV()"
+            data-en="DOWNLOAD REPORT" data-mr="अहवाल डाउनलोड करा">
+            DOWNLOAD REPORT
+          </button>
         </div>
       </div>
-
     </section>
 
-    <!-- REGISTER COMPLAINT -->
-
-    <section class="page" id="register">
-
-      <h2 class="page-heading" data-en="NEW COMPLAINT REGISTRATION" data-mr="नवीन तक्रार नोंदणी">
-        NEW COMPLAINT REGISTRATION
+    <!-- NEW COMPLAINT -->
+    <section id="newComplaint" class="page">
+      <h2 data-en="REGISTER NEW DEMO COMPLAINT"
+          data-mr="नवीन डेमो तक्रार नोंदवा">
+          REGISTER NEW DEMO COMPLAINT
       </h2>
 
-      <p class="subheading" data-en="Enter fictional demonstration information" data-mr="प्रात्यक्षिकासाठी काल्पनिक माहिती भरा">
-        Enter fictional demonstration information
-      </p>
-
       <div class="panel">
-
         <form id="complaintForm">
-
           <div class="form-grid">
-
-            <div class="field">
-              <label data-en="Person Name" data-mr="तक्रारदाराचे नाव">Person Name</label>
-              <input id="personName" required maxlength="100"
-              placeholder="Enter full name">
+            <div>
+              <label data-en="Demo Person Name" data-mr="डेमो व्यक्तीचे नाव">Demo Person Name</label>
+              <input id="personName" required placeholder="Example: Demo User">
             </div>
-
-            <div class="field">
-              <label data-en="Contact Number" data-mr="संपर्क क्रमांक">Contact Number</label>
-              <input id="phone" type="tel" required
-              pattern="[0-9]{10}" maxlength="10"
-              placeholder="10 digit mobile number">
+            <div>
+              <label data-en="Demo Contact Number" data-mr="डेमो संपर्क क्रमांक">Demo Contact Number</label>
+              <input id="contact" required placeholder="Example: 0000000000">
             </div>
-
-            <div class="field full">
-              <label data-en="Address" data-mr="पत्ता">Address</label>
-              <textarea id="address" required maxlength="500"
-              placeholder="Enter address"></textarea>
+            <div>
+              <label data-en="Demo Address" data-mr="डेमो पत्ता">Demo Address</label>
+              <input id="address" required placeholder="Demo address only">
             </div>
-
-            <div class="field">
-              <label data-en="Complaint Type" data-mr="तक्रारीचा प्रकार">Complaint Type</label>
-
-              <select id="type" required>
-                <option value="">Select Type</option>
-                <option value="Cyber Crime">Cyber Crime / सायबर गुन्हा</option>
-                <option value="Theft">Theft / चोरी</option>
-                <option value="Fraud">Fraud / फसवणूक</option>
-                <option value="Missing Person">Missing Person / बेपत्ता व्यक्ती</option>
-                <option value="Other">Other / इतर</option>
+            <div>
+              <label data-en="Complaint Category" data-mr="तक्रारीचा प्रकार">Complaint Category</label>
+              <select id="category" required>
+                <option value="">Select category</option>
+                <option>Cyber Awareness Demo</option>
+                <option>Online Fraud Demo</option>
+                <option>Identity Theft Demo</option>
+                <option>Other Demo</option>
               </select>
             </div>
-
-            <div class="field">
+            <div>
               <label data-en="Incident Date" data-mr="घटनेची तारीख">Incident Date</label>
               <input type="date" id="incidentDate" required>
             </div>
-
-            <div class="field full">
-              <label data-en="Complaint Description" data-mr="तक्रारीचे वर्णन">Complaint Description</label>
-              <textarea id="description" required maxlength="3000"
-              placeholder="Enter complaint details"></textarea>
+            <div>
+              <label data-en="Demo Status" data-mr="डेमो स्थिती">Demo Status</label>
+              <select id="status">
+                <option>Pending</option>
+                <option>Under Review</option>
+                <option>Resolved</option>
+              </select>
             </div>
-
-            <div class="field full">
-              <label data-en="Evidence Attachment (Demo only)" data-mr="पुरावा जोडणे (डेमो)">Evidence Attachment (Demo only)</label>
-              <input type="file" id="evidenceFile"
-              accept="image/*,.pdf,video/*">
-              <div class="notice">
-                Demo only. Selecting a file does not upload or save it.
-              </div>
-            </div>
-
           </div>
 
-          <button type="submit" class="btn btn-green">
-            SUBMIT COMPLAINT
-          </button>
+          <label data-en="Demo Description" data-mr="डेमो वर्णन">Demo Description</label>
+          <textarea id="description" required
+            placeholder="Enter fictional demo information only"></textarea>
 
-          <button type="reset" class="btn">
-            CLEAR FORM
-          </button>
+          <p class="small">Do not enter real complainant details or real case information.</p>
 
+          <button class="primary" type="submit"
+            data-en="SUBMIT DEMO COMPLAINT" data-mr="डेमो तक्रार सबमिट करा">
+            SUBMIT DEMO COMPLAINT
+          </button>
         </form>
-
+        <div id="formMessage" class="notice" hidden></div>
       </div>
-
     </section>
 
     <!-- RECORDS -->
-
-    <section class="page" id="records">
-
-      <h2 class="page-heading" data-en="COMPLAINT DATABASE" data-mr="तक्रार नोंद">COMPLAINT DATABASE</h2>
-
-      <p class="subheading" data-en="Search demonstration complaint records" data-mr="प्रात्यक्षिक तक्रारी शोधा">Search demonstration complaint records</p>
-
+    <section id="records" class="page">
+      <h2 data-en="DEMO CASE RECORDS" data-mr="डेमो तक्रार नोंदी">DEMO CASE RECORDS</h2>
       <div class="panel">
-
-        <input id="search" type="search"
-        placeholder="Search by complaint ID or name..."
-        oninput="renderRecords()">
-
+        <label data-en="Search by ID or name" data-mr="आयडी किंवा नावाने शोधा">Search by ID or name</label>
+        <input id="searchBox" oninput="renderRecords()"
+          placeholder="Search demo records...">
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Complaint Type</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>ID</th><th>Name</th><th>Category</th>
+                <th>Date</th><th>Status</th>
               </tr>
             </thead>
-
-            <tbody id="recordsBody"></tbody>
+            <tbody id="recordsBody">
+              <tr><td colspan="5">No demo records yet.</td></tr>
+            </tbody>
           </table>
         </div>
-
-        <div id="empty" class="empty">
-          No demonstration records available.
-        </div>
-
       </div>
-
     </section>
 
     <!-- EVIDENCE -->
-
-    <section class="page" id="evidence">
-
-      <h2 class="page-heading" data-en="EVIDENCE MANAGEMENT" data-mr="पुरावा व्यवस्थापन">EVIDENCE MANAGEMENT</h2>
-
-      <p class="subheading" data-en="Demonstration evidence management module" data-mr="प्रात्यक्षिक पुरावा व्यवस्थापन विभाग">Demonstration evidence management module</p>
-
+    <section id="evidence" class="page">
+      <h2 data-en="EVIDENCE INFORMATION" data-mr="पुराव्याची माहिती">EVIDENCE INFORMATION</h2>
       <div class="panel">
-        <h3>◈ EVIDENCE CENTER</h3>
-
-        <div class="notice">
-          Evidence storage is not connected yet. This module is a visual demonstration only.
-          No files are uploaded, retained or linked to complaints.
-        </div>
-
-        <p>Planned evidence categories:</p>
+        <h3>Digital Evidence - Learning Module</h3>
+        <p class="muted">
+          This demonstration page explains digital evidence concepts.
+          It does not accept, upload, or store evidence files.
+        </p>
         <ul>
-          <li>Photographs</li>
-          <li>PDF documents</li>
-          <li>Video files</li>
-          <li>Other digital evidence</li>
+          <li>Preserve original evidence without alteration.</li>
+          <li>Document the source and handling history.</li>
+          <li>Use authorized forensic procedures.</li>
+          <li>Maintain evidence integrity and access records.</li>
         </ul>
+        <div class="notice">
+          Do not upload real photographs, documents, device data, or evidence to this demo website.
+        </div>
       </div>
-
     </section>
 
     <!-- REPORTS -->
-
-    <section class="page" id="reports">
-
-      <h2 class="page-heading" data-en="COMPLAINT REPORTS" data-mr="तक्रार अहवाल">COMPLAINT REPORTS</h2>
-
+    <section id="reports" class="page">
+      <h2 data-en="REPORTS AND EXPORT" data-mr="अहवाल आणि निर्यात">REPORTS AND EXPORT</h2>
       <div class="panel">
-        <h3>REPORT SUMMARY</h3>
-
-        <p>Total records: <strong id="reportTotal">0</strong></p>
-        <p>Pending: <strong id="reportPending">0</strong></p>
-        <p>Under Review: <strong id="reportReview">0</strong></p>
-        <p>Resolved: <strong id="reportResolved">0</strong></p>
-
-        <button class="btn btn-green" onclick="downloadReport()">
-          DOWNLOAD DEMO CSV
+        <h3 data-en="Demo Report" data-mr="डेमो अहवाल">Demo Report</h3>
+        <p class="muted" data-en="Download the fictional records entered in this browser session."
+           data-mr="या ब्राउझर सत्रातील काल्पनिक नोंदी डाउनलोड करा.">
+          Download the fictional records entered in this browser session.
+        </p>
+        <button class="primary" onclick="downloadCSV()"
+          data-en="DOWNLOAD CSV REPORT" data-mr="CSV अहवाल डाउनलोड करा">
+          DOWNLOAD CSV REPORT
         </button>
       </div>
-
     </section>
 
     <!-- ABOUT -->
-
-    <section class="page" id="about">
-
-      <h2 class="page-heading" data-en="ABOUT THE PROJECT" data-mr="प्रकल्पाबद्दल">ABOUT THE PROJECT</h2>
-
+    <section id="about" class="page">
+      <h2 data-en="ABOUT THIS PROJECT" data-mr="या प्रकल्पाबद्दल">ABOUT THIS PROJECT</h2>
       <div class="panel">
-        <h3>POLICE COMPLAINT MANAGEMENT SYSTEM</h3>
-
+        <h3>Police Complaint Management System</h3>
         <p>
-          A bilingual web application prototype designed to demonstrate
-          digital complaint registration and complaint record management.
+          A student learning prototype demonstrating a complaint dashboard,
+          sample registration form, record search and report export.
         </p>
-
-        <p><strong>Languages:</strong> English and Marathi</p>
-        <p><strong>Interface:</strong> Cyber Security Operations Center</p>
-        <p><strong>Technology:</strong> HTML, CSS and JavaScript</p>
-        <p><strong>Project:</strong> Police Station Internship Demonstration</p>
-
-        <div class="notice">
-          This is an independent internship prototype, not an official police department system.
-          It is not authorized for real complaint processing.
-        </div>
+        <p class="muted">
+          This is not an official police system. It has no authentication,
+          secure database, access control, or evidence management.
+        </p>
       </div>
-
     </section>
-
-  </div>
-
-  <footer>
-    CYBER POLICE | COMPLAINT MANAGEMENT SYSTEM | DEMO VERSION 1.0
-  </footer>
-
-</main>
+  </main>
 </div>
 
+<footer>
+  CYBER POLICE CMS | STUDENT DEMO PROJECT
+</footer>
+
 <script>
+// Demo records exist only while this page remains open.
+let complaints = [];
+let nextId = 1;
+let currentLanguage = "en";
 
-// MATRIX EFFECT
+// NAVIGATION FUNCTION
+function showPage(pageId, clickedButton) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
 
+  const target = document.getElementById(pageId);
+  if (!target) return;
+
+  target.classList.add("active");
+
+  document.querySelectorAll(".sidebar button").forEach(button => {
+    button.classList.remove("active");
+  });
+
+  if (clickedButton) {
+    clickedButton.classList.add("active");
+  } else {
+    document.querySelectorAll(".sidebar button").forEach(button => {
+      if (button.getAttribute("onclick")?.includes("'" + pageId + "'")) {
+        button.classList.add("active");
+      }
+    });
+  }
+
+  if (pageId === "dashboard") updateDashboard();
+  if (pageId === "records") renderRecords();
+}
+
+// LANGUAGE FUNCTION
+function toggleLanguages() {
+  currentLanguage = currentLanguage === "en" ? "mr" : "en";
+
+  document.querySelectorAll("[data-en]").forEach(element => {
+    const translated = element.getAttribute(
+      currentLanguage === "en" ? "data-en" : "data-mr"
+    );
+    if (translated !== null) element.textContent = translated;
+  });
+
+  document.getElementById("languageButton").textContent =
+    currentLanguage === "en" ? "मराठी" : "English";
+}
+
+// FORM SUBMISSION
+document.getElementById("complaintForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const complaint = {
+    id: "DEMO-" + String(nextId++).padStart(4, "0"),
+    name: document.getElementById("personName").value.trim(),
+    contact: document.getElementById("contact").value.trim(),
+    address: document.getElementById("address").value.trim(),
+    category: document.getElementById("category").value,
+    date: document.getElementById("incidentDate").value,
+    status: document.getElementById("status").value,
+    description: document.getElementById("description").value.trim()
+  };
+
+  if (!complaint.name || !complaint.contact || !complaint.address ||
+      !complaint.category || !complaint.date || !complaint.description) {
+    alert("Please complete all required fields.");
+    return;
+  }
+
+  complaints.push(complaint);
+
+  document.getElementById("formMessage").hidden = false;
+  document.getElementById("formMessage").textContent =
+    "Demo complaint registered successfully. Demo ID: " + complaint.id;
+
+  this.reset();
+  updateDashboard();
+  renderRecords();
+});
+
+// DASHBOARD COUNTS
+function updateDashboard() {
+  document.getElementById("totalCount").textContent = complaints.length;
+  document.getElementById("pendingCount").textContent =
+    complaints.filter(c => c.status === "Pending").length;
+  document.getElementById("reviewCount").textContent =
+    complaints.filter(c => c.status === "Under Review").length;
+  document.getElementById("resolvedCount").textContent =
+    complaints.filter(c => c.status === "Resolved").length;
+}
+
+// CASE RECORDS
+function renderRecords() {
+  const body = document.getElementById("recordsBody");
+  const search = (document.getElementById("searchBox")?.value || "").toLowerCase();
+
+  const filtered = complaints.filter(c =>
+    c.id.toLowerCase().includes(search) ||
+    c.name.toLowerCase().includes(search)
+  );
+
+  if (filtered.length === 0) {
+    body.innerHTML = '<tr><td colspan="5">No matching demo records found.</td></tr>';
+    return;
+  }
+
+  body.innerHTML = "";
+
+  filtered.forEach(c => {
+    const row = document.createElement("tr");
+
+    [c.id, c.name, c.category, c.date, c.status].forEach(value => {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
+
+    body.appendChild(row);
+  });
+}
+
+// CSV REPORT
+function downloadCSV() {
+  if (complaints.length === 0) {
+    alert("There are no demo records to download yet.");
+    return;
+  }
+
+  const columns = ["ID","Name","Contact","Address","Category","Date","Status","Description"];
+  const rows = complaints.map(c => [
+    c.id,c.name,c.contact,c.address,c.category,c.date,c.status,c.description
+  ]);
+
+  const csvCell = value =>
+    '"' + String(value ?? "").replace(/"/g, '""') + '"';
+
+  const csv = [columns, ...rows]
+    .map(row => row.map(csvCell).join(","))
+    .join("\r\n");
+
+  const blob = new Blob(["\uFEFF" + csv], {
+    type: "text/csv;charset=utf-8;"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "demo-complaint-report.csv";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+// MATRIX BACKGROUND EFFECT
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
-
 let drops = [];
-let columns = 0;
 
 function resizeMatrix() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-
-  columns = Math.floor(canvas.width / 18);
+  const columns = Math.floor(canvas.width / 18);
   drops = Array(columns).fill(1);
 }
 
-resizeMatrix();
-window.addEventListener("resize", resizeMatrix);
-
-const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
 function drawMatrix() {
-
-  ctx.fillStyle = "rgba(5,11,18,0.12)";
+  ctx.fillStyle = "rgba(5,11,20,0.08)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
   ctx.fillStyle = "#00ff9d";
-  ctx.font = "14px monospace";
+  ctx.font = "15px monospace";
 
-  for (let i = 0; i < drops.length; i++) {
+  drops.forEach((y, index) => {
+    const character = Math.random() > 0.5 ? "1" : "0";
+    ctx.fillText(character, index * 18, y * 18);
 
-    const char = chars[Math.floor(Math.random() * chars.length)];
+    if (y * 18 > canvas.height && Math.random() > 0.975) {
+      drops[index] = 0;
+    }
+    drops[index]++;
+  });
+}
 
-    ctx.fillText(char, i * 18, drops[i] * 18);
+window.addEventListener("resize", resizeMatrix);
+resizeMatrix();
+setInterval(drawMatrix, 70);
 
-    if (drops[i] * 18 > canvas.
+// INITIAL PAGE SETUP
+updateDashboard();
+</script>
+</body>
+</html>
