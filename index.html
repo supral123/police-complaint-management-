@@ -23,17 +23,27 @@ header {
   padding: 22px;
 }
 
-header h2 {
-  margin: 0 0 8px;
-}
-
-nav {
+.header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 15px;
+}
+
+header h2 {
+  margin: 0 0 8px;
+}
+
+header p {
+  margin: 0;
+  color: #d5e1ed;
+}
+
+.container {
+  max-width: 1150px;
+  margin: auto;
+  padding: 22px;
 }
 
 button {
@@ -44,12 +54,16 @@ button {
   background: #1769aa;
   color: white;
   font-weight: bold;
+  margin: 4px;
 }
 
-.container {
-  padding: 22px;
-  max-width: 1100px;
-  margin: auto;
+button:hover {
+  opacity: 0.88;
+}
+
+.language-btn {
+  background: white;
+  color: #142d46;
 }
 
 .stats {
@@ -59,7 +73,7 @@ button {
   margin: 20px 0;
 }
 
-.card {
+.card, .section {
   background: white;
   padding: 22px;
   border-radius: 10px;
@@ -78,75 +92,255 @@ button {
 }
 
 .section {
-  background: white;
-  padding: 22px;
-  border-radius: 10px;
   margin-top: 20px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  margin: 8px 0 18px;
+  font-size: 15px;
+  background: white;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+label {
+  font-weight: bold;
+}
+
+.form-section {
+  display: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  background: #edf2f7;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.status {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: #e0f2fe;
+  color: #075985;
+  font-size: 12px;
+}
+
+.danger {
+  background: #b42318;
+}
+
+.secondary {
+  background: #64748b;
+}
+
+.notice {
+  background: #fff7e6;
+  padding: 13px;
+  border-radius: 7px;
+  color: #795000;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 footer {
   text-align: center;
-  padding: 20px;
+  padding: 25px;
   color: #64748b;
 }
 
+@media(max-width:600px) {
+  .container {
+    padding: 12px;
+  }
+
+  .section, .card {
+    padding: 15px;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h2 id="title">Police Complaint Management System</h2>
-  <div id="subtitle">पोलीस तक्रार व्यवस्थापन प्रणाली</div>
+  <div class="header-top">
+    <div>
+      <h2 id="mainTitle">Police Complaint Management System</h2>
+      <p id="marathiTitle">पोलीस तक्रार व्यवस्थापन प्रणाली</p>
+    </div>
 
-  <nav>
-    <strong id="station">Police Station Dashboard</strong>
-    <button onclick="changeLanguage()" id="langBtn">
+    <button class="language-btn" onclick="changeLanguage()" id="languageButton">
       मराठी
     </button>
-  </nav>
+  </div>
 </header>
 
 <div class="container">
 
-  <h2 id="welcome">Dashboard Overview</h2>
+  <h2 id="dashboardTitle">Dashboard Overview</h2>
 
   <div class="stats">
 
     <div class="card">
-      <h3 id="totalLabel">Total Complaints</h3>
-      <div class="number">125</div>
+      <h3 id="totalText">Total Complaints</h3>
+      <div class="number" id="totalCount">0</div>
     </div>
 
     <div class="card">
-      <h3 id="pendingLabel">Pending Complaints</h3>
-      <div class="number">42</div>
+      <h3 id="pendingText">Pending Complaints</h3>
+      <div class="number" id="pendingCount">0</div>
     </div>
 
     <div class="card">
-      <h3 id="reviewLabel">Under Review</h3>
-      <div class="number">35</div>
+      <h3 id="reviewText">Under Review</h3>
+      <div class="number" id="reviewCount">0</div>
     </div>
 
     <div class="card">
-      <h3 id="resolvedLabel">Resolved Complaints</h3>
-      <div class="number">48</div>
+      <h3 id="resolvedText">Resolved Complaints</h3>
+      <div class="number" id="resolvedCount">0</div>
     </div>
 
   </div>
 
   <div class="section">
     <h2 id="quickTitle">Quick Actions</h2>
-    <button id="newBtn">+ Register New Complaint</button>
-    <button id="recordsBtn">View Complaint Records</button>
+
+    <button onclick="openForm()" id="newButton">
+      + Register New Complaint
+    </button>
+
+    <button onclick="showRecords()" id="recordsButton">
+      View Complaint Records
+    </button>
+  </div>
+
+  <!-- COMPLAINT FORM -->
+
+  <div class="section form-section" id="complaintForm">
+
+    <h2 id="formTitle">New Complaint Registration</h2>
+
+    <form id="registerForm">
+
+      <label id="nameLabel">Person Name</label>
+      <input type="text" id="personName" required
+      placeholder="Enter full name">
+
+      <label id="phoneLabel">Contact Number</label>
+      <input type="tel" id="phone" required
+      pattern="[0-9]{10}" maxlength="10"
+      placeholder="Enter 10 digit mobile number">
+
+      <label id="addressLabel">Address</label>
+      <textarea id="address" required
+      placeholder="Enter address"></textarea>
+
+      <label id="typeLabel">Complaint Type</label>
+
+      <select id="complaintType" required>
+        <option value="">Select Complaint Type</option>
+        <option value="Cyber Crime">Cyber Crime / सायबर गुन्हा</option>
+        <option value="Theft">Theft / चोरी</option>
+        <option value="Fraud">Fraud / फसवणूक</option>
+        <option value="Missing Person">Missing Person / बेपत्ता व्यक्ती</option>
+        <option value="Other">Other / इतर</option>
+      </select>
+
+      <label id="descriptionLabel">Complaint Description</label>
+      <textarea id="description" required
+      placeholder="Enter complaint details"></textarea>
+
+      <label id="evidenceLabel">Evidence File (Demo only)</label>
+      <input type="file" id="evidence"
+      accept="image/*,.pdf,video/*">
+
+      <p class="notice" id="evidenceNotice">
+        Demo only: Selecting a file does not upload or store it.
+      </p>
+
+      <button type="submit" id="submitButton">
+        Submit Complaint
+      </button>
+
+      <button type="button" class="secondary"
+      onclick="closeForm()" id="cancelButton">
+        Cancel
+      </button>
+
+    </form>
+
+    <p id="formMessage"></p>
+
+  </div>
+
+  <!-- COMPLAINT RECORDS -->
+
+  <div class="section" id="recordsSection" style="display:none;">
+
+    <h2 id="recordsTitle">Complaint Records</h2>
+
+    <input type="text" id="searchInput"
+    placeholder="Search by name or complaint ID"
+    oninput="showRecords()">
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th id="tableName">Name</th>
+            <th id="tableType">Complaint Type</th>
+            <th id="tableDate">Date</th>
+            <th id="tableStatus">Status</th>
+          </tr>
+        </thead>
+
+        <tbody id="complaintTable">
+        </tbody>
+      </table>
+    </div>
+
+    <p id="emptyMessage">No complaints registered yet.</p>
+
+    <button class="secondary" onclick="hideRecords()" id="backButton">
+      Back to Dashboard
+    </button>
+
   </div>
 
   <div class="section">
-    <h2 id="noticeTitle">Project Information</h2>
-    <p id="notice">
-      This is a demonstration dashboard.
-      All displayed numbers are fictional.
-      No real police records are stored.
+    <h2 id="infoTitle">Project Information</h2>
+    <p id="infoText">
+      Police Complaint Management System - Demonstration Project.
+      All records are temporary fictional test records.
+    </p>
+
+    <p class="notice">
+      This prototype is not approved for official police records.
+      Do not enter real personal information or evidence.
     </p>
   </div>
 
@@ -158,63 +352,209 @@ footer {
 
 <script>
 
+// TEMPORARY DEMO DATA ONLY
+// Records disappear when the page is refreshed.
+
+let complaints = [];
 let currentLanguage = "en";
 
 function changeLanguage() {
 
-  if (currentLanguage === "en") {
+  currentLanguage = currentLanguage === "en" ? "mr" : "en";
 
-    currentLanguage = "mr";
+  const mr = currentLanguage === "mr";
 
-    document.getElementById("title").innerText =
-      "पोलीस तक्रार व्यवस्थापन प्रणाली";
+  const translations = {
+    mainTitle: mr ? "पोलीस तक्रार व्यवस्थापन प्रणाली" : "Police Complaint Management System",
+    marathiTitle: mr ? "Police Complaint Management System" : "पोलीस तक्रार व्यवस्थापन प्रणाली",
+    dashboardTitle: mr ? "डॅशबोर्ड" : "Dashboard Overview",
+    totalText: mr ? "एकूण तक्रारी" : "Total Complaints",
+    pendingText: mr ? "प्रलंबित तक्रारी" : "Pending Complaints",
+    reviewText: mr ? "तपासणी सुरू" : "Under Review",
+    resolvedText: mr ? "निकाली तक्रारी" : "Resolved Complaints",
+    quickTitle: mr ? "जलद पर्याय" : "Quick Actions",
+    newButton: mr ? "+ नवीन तक्रार नोंदवा" : "+ Register New Complaint",
+    recordsButton: mr ? "तक्रारी पहा" : "View Complaint Records",
+    formTitle: mr ? "नवीन तक्रार नोंदणी" : "New Complaint Registration",
+    nameLabel: mr ? "तक्रारदाराचे नाव" : "Person Name",
+    phoneLabel: mr ? "संपर्क क्रमांक" : "Contact Number",
+    addressLabel: mr ? "पत्ता" : "Address",
+    typeLabel: mr ? "तक्रारीचा प्रकार" : "Complaint Type",
+    descriptionLabel: mr ? "तक्रारीचे वर्णन" : "Complaint Description",
+    evidenceLabel: mr ? "पुरावा फाइल (डेमो)" : "Evidence File (Demo only)",
+    evidenceNotice: mr ? "फाइल निवडल्याने ती अपलोड किंवा साठवली जात नाही." : "Demo only: Selecting a file does not upload or store it.",
+    submitButton: mr ? "तक्रार जमा करा" : "Submit Complaint",
+    cancelButton: mr ? "रद्द करा" : "Cancel",
+    recordsTitle: mr ? "तक्रारींची नोंद" : "Complaint Records",
+    tableName: mr ? "नाव" : "Name",
+    tableType: mr ? "तक्रारीचा प्रकार" : "Complaint Type",
+    tableDate: mr ? "दिनांक" : "Date",
+    tableStatus: mr ? "स्थिती" : "Status",
+    emptyMessage: mr ? "अद्याप कोणतीही तक्रार नोंदवलेली नाही." : "No complaints registered yet.",
+    backButton: mr ? "डॅशबोर्डवर परत जा" : "Back to Dashboard",
+    infoTitle: mr ? "प्रकल्पाची माहिती" : "Project Information",
+    infoText: mr ? "पोलीस तक्रार व्यवस्थापन प्रणाली - प्रात्यक्षिक प्रकल्प. सर्व नोंदी तात्पुरत्या काल्पनिक आहेत." : "Police Complaint Management System - Demonstration Project. All records are temporary fictional test records."
+  };
 
-    document.getElementById("subtitle").innerText =
-      "Police Complaint Management System";
-
-    document.getElementById("station").innerText =
-      "पोलीस स्टेशन डॅशबोर्ड";
-
-    document.getElementById("welcome").innerText =
-      "डॅशबोर्ड";
-
-    document.getElementById("totalLabel").innerText =
-      "एकूण तक्रारी";
-
-    document.getElementById("pendingLabel").innerText =
-      "प्रलंबित तक्रारी";
-
-    document.getElementById("reviewLabel").innerText =
-      "तपासणी सुरू";
-
-    document.getElementById("resolvedLabel").innerText =
-      "निकाली तक्रारी";
-
-    document.getElementById("quickTitle").innerText =
-      "जलद पर्याय";
-
-    document.getElementById("newBtn").innerText =
-      "+ नवीन तक्रार नोंदवा";
-
-    document.getElementById("recordsBtn").innerText =
-      "तक्रारी पहा";
-
-    document.getElementById("noticeTitle").innerText =
-      "प्रकल्पाची माहिती";
-
-    document.getElementById("notice").innerText =
-      "हे फक्त प्रात्यक्षिक डॅशबोर्ड आहे. सर्व आकडे काल्पनिक आहेत.";
-
-    document.getElementById("langBtn").innerText =
-      "English";
-
-  } else {
-
-    location.reload();
-
+  for (let id in translations) {
+    document.getElementById(id).innerText = translations[id];
   }
 
+  document.getElementById("languageButton").innerText =
+    mr ? "English" : "मराठी";
+
+  document.getElementById("searchInput").placeholder =
+    mr ? "नाव किंवा तक्रार क्रमांक शोधा" : "Search by name or complaint ID";
+
+  document.getElementById("phone").placeholder =
+    mr ? "१० अंकी मोबाईल क्रमांक" : "Enter 10 digit mobile number";
+
+  document.getElementById("address").placeholder =
+    mr ? "पत्ता लिहा" : "Enter address";
+
+  document.getElementById("description").placeholder =
+    mr ? "तक्रारीचा तपशील लिहा" : "Enter complaint details";
+
+  showRecords();
+  updateDashboard();
 }
+
+function openForm() {
+  document.getElementById("complaintForm").style.display = "block";
+  document.getElementById("recordsSection").style.display = "none";
+
+  document.getElementById("complaintForm").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+function closeForm() {
+  document.getElementById("complaintForm").style.display = "none";
+  document.getElementById("registerForm").reset();
+  document.getElementById("formMessage").innerText = "";
+}
+
+function hideRecords() {
+  document.getElementById("recordsSection").style.display = "none";
+}
+
+function updateDashboard() {
+
+  document.getElementById("totalCount").innerText =
+    complaints.length;
+
+  document.getElementById("pendingCount").innerText =
+    complaints.filter(c => c.status === "Pending").length;
+
+  document.getElementById("reviewCount").innerText =
+    complaints.filter(c => c.status === "Under Review").length;
+
+  document.getElementById("resolvedCount").innerText =
+    complaints.filter(c => c.status === "Resolved").length;
+}
+
+document.getElementById("registerForm").onsubmit = function(event) {
+
+  event.preventDefault();
+
+  const complaint = {
+    id: "DEMO-" + String(complaints.length + 1).padStart(4, "0"),
+    name: document.getElementById("personName").value.trim(),
+    phone: document.getElementById("phone").value,
+    address: document.getElementById("address").value.trim(),
+    type: document.getElementById("complaintType").value,
+    description: document.getElementById("description").value.trim(),
+    date: new Date().toLocaleDateString(),
+    status: "Pending"
+  };
+
+  complaints.push(complaint);
+
+  document.getElementById("formMessage").innerText =
+    currentLanguage === "mr"
+    ? "डेमो तक्रार यशस्वीरित्या नोंदवली!"
+    : "Demo complaint registered successfully!";
+
+  updateDashboard();
+
+  this.reset();
+
+  showRecords();
+
+  document.getElementById("complaintForm").style.display = "none";
+  document.getElementById("recordsSection").style.display = "block";
+};
+
+function showRecords() {
+
+  const search = document.getElementById("searchInput").value.toLowerCase();
+
+  const table = document.getElementById("complaintTable");
+
+  table.innerHTML = "";
+
+  let filtered = complaints.filter(c =>
+    c.name.toLowerCase().includes(search) ||
+    c.id.toLowerCase().includes(search)
+  );
+
+  filtered.forEach(c => {
+
+    const row = document.createElement("tr");
+
+    const values = [
+      c.id,
+      c.name,
+      c.type,
+      c.date,
+      c.status
+    ];
+
+    values.forEach(value => {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
+
+    table.appendChild(row);
+
+  });
+
+  document.getElementById("emptyMessage").style.display =
+    filtered.length === 0 ? "block" : "none";
+}
+
+function showRecords() {
+  document.getElementById("complaintForm").style.display = "none";
+  document.getElementById("recordsSection").style.display = "block";
+
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const table = document.getElementById("complaintTable");
+
+  table.innerHTML = "";
+
+  const filtered = complaints.filter(c =>
+    c.name.toLowerCase().includes(search) ||
+    c.id.toLowerCase().includes(search)
+  );
+
+  filtered.forEach(c => {
+    const row = document.createElement("tr");
+
+    [c.id, c.name, c.type, c.date, c.status].forEach(value => {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
+
+    table.appendChild(row);
+  });
+
+  document.getElementById("emptyMessage").style.display =
+    filtered.length === 0 ? "block" : "none";
+}
+
+updateDashboard();
 
 </script>
 
