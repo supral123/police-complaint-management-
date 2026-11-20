@@ -5,264 +5,357 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chandrapur Cyber Police | CMS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap');
+
 :root {
-  --bg:#050a13;
-  --panel:#0b1725;
-  --panel2:#10263a;
+  --green:#39ff88;
   --cyan:#00eaff;
-  --green:#00ff9d;
-  --text:#e8f5ff;
-  --muted:#91a9bb;
-  --border:#17405a;
-  --red:#ff5369;
+  --blue:#62baff;
+  --bg:#050b16;
+  --panel:#0d192b;
+  --text:#e7f7ff;
+  --muted:#91a8bd;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:'Rajdhani',sans-serif;font-size:18px;
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+  font-size:18px;
   overflow-x:hidden;
 }
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-#matrix{
-  position:fixed;inset:0;width:100%;height:100%;
-  opacity:.13;pointer-events:none;z-index:-2;
+
+button,input,select,textarea { font:inherit; }
+
+button {
+  cursor:pointer;
+  border:0;
+  transition:.25s;
 }
 
-/* WELCOME SCREEN */
-#welcomeScreen{
-  position:fixed;inset:0;z-index:1000;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:22px;overflow:hidden;
-  background:
-    radial-gradient(ellipse at 50% 40%,#103a50 0%,#071525 48%,#030710 100%);
+button:hover {
+  transform:translateY(-3px);
+  box-shadow:0 0 20px #39ff8877;
 }
-#welcomeScreen::before,
-#welcomeScreen::after{
-  content:"";position:absolute;width:330px;height:330px;
-  border:1px solid #00eaff55;border-radius:50%;
-  box-shadow:0 0 35px #00eaff22,inset 0 0 35px #00eaff22;
-  animation:ring 12s linear infinite;pointer-events:none;
+
+#matrix {
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  opacity:.12;
+  pointer-events:none;
 }
-#welcomeScreen::after{
-  width:440px;height:440px;animation-direction:reverse;
-  border-color:#00ff9d33;
+
+.welcome {
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:radial-gradient(circle,#102c50,#030711 70%);
+  padding:20px;
+  transition:opacity .6s ease;
 }
-.welcome-content{
-  position:relative;z-index:2;max-width:760px;
-  animation:welcomeIn 1.2s ease;
+
+.welcome-content {
+  max-width:850px;
+  animation:welcomeFloat 3s ease-in-out infinite;
 }
-.welcome-shield{
-  font-size:100px;display:inline-block;
-  filter:drop-shadow(0 0 22px #00eaff);
-  animation:shieldFloat 3s ease-in-out infinite;
+
+@keyframes welcomeFloat {
+  0%,100% { transform:translateY(0) rotateX(0); }
+  50% { transform:translateY(-12px) rotateX(2deg); }
 }
-.welcome-content h1{
+
+.welcome-shield {
+  font-size:65px;
+  filter:drop-shadow(0 0 25px var(--cyan));
+}
+
+.welcome-tag {
+  color:var(--green);
   font-family:Orbitron,sans-serif;
-  font-size:clamp(26px,5vw,48px);
-  line-height:1.35;color:var(--cyan);
-  text-shadow:0 0 12px #00eaff,0 0 35px #00eaff77;
-  margin:20px 0;
+  letter-spacing:5px;
+  font-size:15px;
 }
-.welcome-content p{color:#b7d0df;font-size:20px}
-.welcome-tag{
-  color:var(--green)!important;
-  font-family:Orbitron,sans-serif;font-size:12px!important;
-  letter-spacing:4px;
+
+.welcome h1 {
+  font-family:Orbitron,sans-serif;
+  font-size:clamp(28px,6vw,55px);
+  color:#eafaff;
+  text-shadow:0 0 12px var(--cyan),0 0 35px var(--blue);
+  line-height:1.4;
 }
-#enterButton{
-  margin:24px 0;padding:15px 36px;
-  background:transparent;color:var(--green);
-  border:2px solid var(--green);border-radius:6px;
-  font-family:Orbitron,sans-serif;font-weight:700;
-  box-shadow:0 0 18px #00ff9d55;
+
+.welcome p {
+  color:#d8e9f8;
+  font-size:22px;
+}
+
+.enter-btn {
+  margin-top:25px;
+  padding:18px 48px;
+  background:var(--green);
+  color:#052015;
+  border-radius:8px;
+  font-family:Orbitron,sans-serif;
+  font-size:16px;
+  box-shadow:0 0 25px #39ff88;
+}
+
+header {
+  padding:18px 25px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  background:#071426ee;
+  border-bottom:1px solid #00eaff55;
+  box-shadow:0 5px 25px #00eaff15;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-icon {
+  font-size:35px;
+  filter:drop-shadow(0 0 10px var(--cyan));
+}
+
+.brand h2 {
+  font-family:Orbitron,sans-serif;
+  font-size:17px;
+  margin:0;
+  color:var(--cyan);
+}
+
+.brand small { color:var(--muted); }
+
+.top-actions {
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.small-btn {
+  padding:9px 15px;
+  border:1px solid var(--green);
+  color:var(--green);
+  background:transparent;
+  border-radius:6px;
+}
+
+.layout {
+  display:grid;
+  grid-template-columns:230px 1fr;
+  min-height:calc(100vh - 80px);
+}
+
+.sidebar {
+  background:#081426;
+  border-right:1px solid #00eaff33;
+  padding:20px 12px;
+}
+
+.sidebar h3 {
+  color:var(--muted);
+  font-family:Orbitron,sans-serif;
+  font-size:12px;
+  padding-left:12px;
+}
+
+.nav-btn {
+  display:block;
+  width:100%;
+  padding:13px;
+  margin:7px 0;
+  text-align:left;
+  background:transparent;
+  color:#c6d9e9;
+  border-radius:7px;
+  border:1px solid transparent;
+}
+
+.nav-btn:hover,.nav-btn.active {
+  background:#102d40;
+  color:var(--green);
+  border-color:#39ff8866;
+  box-shadow:0 0 15px #39ff8822;
+}
+
+main { padding:25px; min-width:0; }
+
+.page {
+  display:none;
+  animation:pageIn .45s ease;
+}
+
+.page.active { display:block; }
+
+@keyframes pageIn {
+  from { opacity:0;transform:translateY(15px); }
+  to { opacity:1;transform:translateY(0); }
+}
+
+.page-title {
+  font-family:Orbitron,sans-serif;
+  font-size:23px;
+  color:var(--cyan);
+  margin-top:0;
+}
+
+.muted { color:var(--muted); }
+
+.cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:18px;
+  margin:25px 0;
+}
+
+.stat-card {
+  background:linear-gradient(145deg,#10243a,#091322);
+  border:1px solid #00eaff44;
+  border-radius:12px;
+  padding:22px;
+  box-shadow:0 10px 25px #0008;
   transition:.3s;
-}
-#enterButton:hover{
-  background:var(--green);color:#00130d;
-  transform:scale(1.08);
-  box-shadow:0 0 35px #00ff9d;
-}
-@keyframes ring{
-  from{transform:rotate(0deg) scale(1)}
-  to{transform:rotate(360deg) scale(1.04)}
-}
-@keyframes shieldFloat{
-  0%,100%{transform:translateY(0) rotateY(0)}
-  50%{transform:translateY(-15px) rotateY(20deg)}
-}
-@keyframes welcomeIn{
-  from{opacity:0;transform:translateY(35px) scale(.96)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-
-/* HEADER */
-header{
-  position:relative;z-index:5;
-  background:#081522eF;border-bottom:1px solid var(--cyan);
-  padding:17px 24px;display:flex;align-items:center;
-  justify-content:space-between;gap:15px;flex-wrap:wrap;
-  box-shadow:0 0 20px #00eaff22;
-}
-.brand h1{
-  font-family:Orbitron,sans-serif;font-size:20px;
-  color:var(--cyan);margin:0;text-shadow:0 0 12px #00eaff66;
-}
-.brand p{margin:5px 0 0;color:var(--muted)}
-#languageButton{
-  background:#10283b;color:var(--cyan);
-  border:1px solid var(--cyan);border-radius:6px;
-  padding:10px 18px;font-weight:700;
-}
-
-/* MAIN LAYOUT */
-.layout{display:flex;min-height:calc(100vh - 90px)}
-.sidebar{
-  width:235px;flex-shrink:0;padding:20px 12px;
-  background:#081522ee;border-right:1px solid var(--border);
-}
-.sidebar button{
-  display:block;width:100%;text-align:left;
-  padding:13px 15px;margin-bottom:10px;
-  background:transparent;color:var(--muted);
-  border:1px solid transparent;border-radius:7px;
-  font-weight:700;transition:.25s;
-}
-.sidebar button:hover,.sidebar button.active{
-  color:var(--cyan);border-color:var(--cyan);
-  background:linear-gradient(90deg,#00eaff18,#00ff9d08);
-  box-shadow:0 0 15px #00eaff22;
-  transform:translateX(4px);
-}
-main{flex:1;min-width:0;padding:28px}
-.page{display:none}
-.page.active{display:block;animation:pageEnter .45s ease}
-@keyframes pageEnter{
-  from{opacity:0;transform:translateY(18px) scale(.98)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-h2{
-  color:var(--cyan);font-family:Orbitron,sans-serif;
-  font-size:22px;letter-spacing:1px;margin-top:0;
-}
-h3{color:var(--green)}
-.muted{color:var(--muted)}
-
-/* CARDS */
-.cards{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:17px;margin:24px 0;
-}
-.card{
-  position:relative;overflow:hidden;
-  background:linear-gradient(145deg,#11283e,#091522);
-  border:1px solid var(--border);border-radius:12px;
-  padding:22px;min-height:125px;
   transform-style:preserve-3d;
-  transition:transform .25s,box-shadow .25s,border-color .25s;
-  box-shadow:0 8px 24px #0005;
 }
-.card::before{
-  content:"";position:absolute;top:-70%;left:-70%;
-  width:50%;height:250%;
-  background:linear-gradient(90deg,transparent,#00eaff12,transparent);
-  transform:rotate(35deg);transition:.7s;
+
+.stat-card:hover {
+  transform:perspective(700px) rotateY(5deg) rotateX(4deg) translateY(-6px);
+  border-color:var(--green);
+  box-shadow:0 0 25px #39ff8833;
 }
-.card:hover{
-  transform:perspective(800px) rotateX(5deg) rotateY(-5deg) translateY(-8px);
-  border-color:var(--cyan);box-shadow:0 0 25px #00eaff44;
+
+.stat-card h3 {
+  color:var(--muted);
+  font-size:16px;
+  margin:0;
 }
-.card:hover::before{left:120%}
-.card h3{font-size:16px;margin:0 0 15px;color:var(--muted)}
-.number{
+
+.stat-card strong {
+  display:block;
   font-family:Orbitron,sans-serif;
-  font-size:32px;color:var(--green);
-  text-shadow:0 0 12px #00ff9d66;
+  font-size:32px;
+  color:var(--green);
+  margin-top:12px;
 }
 
-/* PANELS AND FORMS */
-.panel{
-  background:linear-gradient(145deg,#0c1b2b,#091522);
-  border:1px solid var(--border);border-radius:10px;
-  padding:22px;margin-top:20px;
-  box-shadow:0 8px 25px #0004;
-}
-.actions{display:flex;gap:12px;flex-wrap:wrap}
-button{
-  border:1px solid var(--cyan);background:#10283b;
-  color:var(--cyan);padding:10px 16px;
-  border-radius:6px;font-weight:700;
-  transition:transform .2s,box-shadow .2s,background .2s;
-}
-button:hover{
-  box-shadow:0 0 18px #00eaff66;
-  background:#123a50;
-}
-button:active{transform:scale(.94);box-shadow:0 0 25px #00eaff}
-.primary{background:#00c9dc;color:#00111c;border-color:#00eaff}
-.green{color:var(--green);border-color:var(--green)}
-.danger{color:var(--red);border-color:var(--red)}
-label{display:block;color:var(--cyan);margin:13px 0 5px}
-input,select,textarea{
-  width:100%;padding:12px;background:#07111c;color:var(--text);
-  border:1px solid #24506a;border-radius:6px;
-  font-family:inherit;font-size:17px;
-}
-textarea{min-height:105px;resize:vertical}
-input:focus,select:focus,textarea:focus{
-  outline:1px solid var(--cyan);box-shadow:0 0 10px #00eaff44;
-}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.small{font-size:14px;color:var(--muted)}
-.notice{
-  border-left:3px solid var(--green);padding:12px;
-  background:#00ff9d0c;color:var(--muted);margin-top:15px;
-}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;margin-top:15px;min-width:650px}
-th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
-th{color:var(--cyan)}
-td{color:var(--text)}
-footer{text-align:center;color:var(--muted);padding:25px}
-
-/* CLICK RIPPLE */
-.ripple{position:relative;overflow:hidden}
-.ripple-effect{
-  position:absolute;border-radius:50%;
-  background:#00eaff66;transform:scale(0);
-  animation:ripple .6s linear;pointer-events:none;
-}
-@keyframes ripple{
-  to{transform:scale(4);opacity:0}
+.panel {
+  background:#0b192b;
+  border:1px solid #00eaff44;
+  border-radius:12px;
+  padding:22px;
+  margin:20px 0;
+  box-shadow:0 10px 25px #0005;
 }
 
-@media(max-width:900px){
-  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+label {
+  display:block;
+  color:#b9d4e8;
+  margin:14px 0 6px;
 }
-@media(max-width:700px){
-  .layout{display:block}
-  .sidebar{
-    width:100%;display:flex;gap:6px;overflow-x:auto;
-    border-right:0;border-bottom:1px solid var(--border);
-    padding:10px;
+
+input,select,textarea {
+  width:100%;
+  padding:12px;
+  background:#06101e;
+  border:1px solid #31516d;
+  color:white;
+  border-radius:6px;
+  outline:none;
+}
+
+input:focus,select:focus,textarea:focus {
+  border-color:var(--cyan);
+  box-shadow:0 0 10px #00eaff33;
+}
+
+textarea { min-height:110px; resize:vertical; }
+
+.primary-btn {
+  padding:12px 22px;
+  margin-top:18px;
+  background:var(--green);
+  color:#062016;
+  font-weight:700;
+  border-radius:6px;
+}
+
+.secondary-btn {
+  padding:10px 16px;
+  background:#102b40;
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  border-radius:6px;
+}
+
+.table-wrap { overflow-x:auto; }
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+th,td {
+  padding:12px;
+  border-bottom:1px solid #29415a;
+  text-align:left;
+}
+
+th {
+  color:var(--green);
+  background:#10243a;
+}
+
+.status {
+  color:var(--green);
+  font-weight:bold;
+}
+
+footer {
+  text-align:center;
+  padding:20px;
+  color:var(--muted);
+  border-top:1px solid #00eaff33;
+}
+
+.notice {
+  border-left:4px solid var(--green);
+  background:#102b25;
+  padding:13px;
+  color:#c9ffe1;
+  border-radius:5px;
+}
+
+@media(max-width:750px) {
+  .layout { grid-template-columns:1fr; }
+  .sidebar {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    border-right:0;
+    border-bottom:1px solid #00eaff33;
   }
-  .sidebar button{min-width:max-content;width:auto;margin:0}
-  main{padding:17px}
+  .sidebar h3 { grid-column:1/-1; }
+  main { padding:15px; }
 }
-@media(max-width:500px){
-  .cards,.form-grid{grid-template-columns:1fr}
-  .brand h1{font-size:16px}
-  .welcome-shield{font-size:75px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation-duration:.01ms!important;
-    transition-duration:.01ms!important;
-  }
+
+@media(max-width:430px) {
+  .sidebar { grid-template-columns:1fr 1fr; }
+  .brand h2 { font-size:13px; }
 }
 </style>
 </head>
@@ -272,236 +365,215 @@ footer{text-align:center;color:var(--muted);padding:25px}
 <canvas id="matrix"></canvas>
 
 <!-- WELCOME SCREEN -->
-<div id="welcomeScreen">
+<section class="welcome" id="welcomeScreen">
   <div class="welcome-content">
     <div class="welcome-shield">🛡️</div>
     <p class="welcome-tag">CYBER SECURITY SYSTEM</p>
     <h1>WELCOME TO<br>CHANDRAPUR CYBER POLICE</h1>
-    <p>Cyber Awareness & Complaint Management</p>
-    <button id="enterButton" onclick="enterSystem()">ENTER SYSTEM →</button>
-    <p class="small">Independent student project prototype</p>
+    <p>Cyber Awareness &amp; Complaint Management</p>
+    <button class="enter-btn" id="enterButton" onclick="window.enterSystem()">
+      ENTER SYSTEM →
+    </button>
   </div>
-</div>
+</section>
 
-<!-- HEADER -->
 <header>
   <div class="brand">
-    <h1>CHANDRAPUR CYBER POLICE | CMS</h1>
-    <p data-en="Police Complaint Management System"
-       data-mr="पोलीस तक्रार व्यवस्थापन प्रणाली">
-       Police Complaint Management System
-    </p>
+    <div class="brand-icon">🛡️</div>
+    <div>
+      <h2>CHANDRAPUR CYBER POLICE</h2>
+      <small>Complaint Management System | Student Project</small>
+    </div>
   </div>
-  <button id="languageButton" onclick="toggleLanguages()">मराठी</button>
+  <div class="top-actions">
+    <button class="small-btn" onclick="toggleLanguages()" id="languageButton">मराठी</button>
+  </div>
 </header>
 
 <div class="layout">
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
-  <button class="active ripple" onclick="showPage('dashboard',this)"
-    data-en="▣ Dashboard" data-mr="▣ डॅशबोर्ड">▣ Dashboard</button>
+  <h3 data-en="MAIN MENU" data-mr="मुख्य मेनू">MAIN MENU</h3>
 
-  <button class="ripple" onclick="showPage('newComplaint',this)"
-    data-en="＋ New Complaint" data-mr="＋ नवीन तक्रार">＋ New Complaint</button>
+  <button class="nav-btn active" onclick="showPage('dashboard',this)">
+    🏠 <span data-en="Dashboard" data-mr="डॅशबोर्ड">Dashboard</span>
+  </button>
 
-  <button class="ripple" onclick="showPage('records',this)"
-    data-en="▤ Case Records" data-mr="▤ तक्रार नोंदी">▤ Case Records</button>
+  <button class="nav-btn" onclick="showPage('newComplaint',this)">
+    📝 <span data-en="New Complaint" data-mr="नवीन तक्रार">New Complaint</span>
+  </button>
 
-  <button class="ripple" onclick="showPage('evidence',this)"
-    data-en="◈ Evidence" data-mr="◈ पुरावे">◈ Evidence</button>
+  <button class="nav-btn" onclick="showPage('records',this)">
+    📁 <span data-en="Case Records" data-mr="तक्रार नोंदी">Case Records</span>
+  </button>
 
-  <button class="ripple" onclick="showPage('reports',this)"
-    data-en="▥ Reports" data-mr="▥ अहवाल">▥ Reports</button>
+  <button class="nav-btn" onclick="showPage('evidence',this)">
+    🔍 <span data-en="Evidence" data-mr="पुरावा">Evidence</span>
+  </button>
 
-  <button class="ripple" onclick="showPage('about',this)"
-    data-en="ⓘ About Project" data-mr="ⓘ प्रकल्प माहिती">ⓘ About Project</button>
+  <button class="nav-btn" onclick="showPage('reports',this)">
+    📊 <span data-en="Reports" data-mr="अहवाल">Reports</span>
+  </button>
+
+  <button class="nav-btn" onclick="showPage('about',this)">
+    ℹ️ <span data-en="About Project" data-mr="प्रकल्पाबद्दल">About Project</span>
+  </button>
 </aside>
 
 <main>
 
 <!-- DASHBOARD -->
-<section id="dashboard" class="page active">
-  <h2 data-en="DASHBOARD OVERVIEW" data-mr="डॅशबोर्ड आढावा">DASHBOARD OVERVIEW</h2>
-  <p class="muted" data-en="System overview and quick operations"
-     data-mr="प्रणालीचा आढावा आणि जलद कार्यवाही">
-     System overview and quick operations
-  </p>
+<section class="page active" id="dashboard">
+  <h1 class="page-title" data-en="CYBER SECURITY DASHBOARD" data-mr="सायबर सुरक्षा डॅशबोर्ड">
+    CYBER SECURITY DASHBOARD
+  </h1>
+  <p class="muted">Welcome to the Cyber Complaint Management System.</p>
 
   <div class="cards">
-    <div class="card">
-      <h3 data-en="Total Complaints" data-mr="एकूण तक्रारी">Total Complaints</h3>
-      <div class="number" id="totalCount">0</div>
+    <div class="stat-card">
+      <h3>Total Complaints</h3>
+      <strong id="totalCount">0</strong>
     </div>
-    <div class="card">
-      <h3 data-en="Pending Complaints" data-mr="प्रलंबित तक्रारी">Pending Complaints</h3>
-      <div class="number" id="pendingCount">0</div>
+    <div class="stat-card">
+      <h3>Pending</h3>
+      <strong id="pendingCount">0</strong>
     </div>
-    <div class="card">
-      <h3 data-en="Under Review" data-mr="पुनरावलोकन सुरू">Under Review</h3>
-      <div class="number" id="reviewCount">0</div>
+    <div class="stat-card">
+      <h3>Under Review</h3>
+      <strong id="reviewCount">0</strong>
     </div>
-    <div class="card">
-      <h3 data-en="Resolved Complaints" data-mr="निकाली तक्रारी">Resolved Complaints</h3>
-      <div class="number" id="resolvedCount">0</div>
+    <div class="stat-card">
+      <h3>Resolved</h3>
+      <strong id="resolvedCount">0</strong>
     </div>
   </div>
 
   <div class="panel">
-    <h3 data-en="QUICK OPERATIONS" data-mr="जलद कार्यवाही">QUICK OPERATIONS</h3>
-    <div class="actions">
-      <button class="primary ripple" onclick="showPage('newComplaint')"
-        data-en="+ REGISTER COMPLAINT" data-mr="+ तक्रार नोंदवा">
-        + REGISTER COMPLAINT
-      </button>
-      <button class="green ripple" onclick="showPage('records')"
-        data-en="VIEW RECORDS" data-mr="नोंदी पहा">VIEW RECORDS</button>
-      <button class="ripple" onclick="downloadCSV()"
-        data-en="DOWNLOAD REPORT" data-mr="अहवाल डाउनलोड करा">DOWNLOAD REPORT</button>
-    </div>
+    <h2>Cyber Awareness</h2>
+    <p>• Never share OTP, passwords or PINs.</p>
+    <p>• Avoid suspicious links and unknown attachments.</p>
+    <p>• Use strong and unique passwords.</p>
+    <p>• Verify payment requests before sending money.</p>
+    <p>• Report suspected cyber financial fraud promptly through official channels.</p>
   </div>
 </section>
 
 <!-- NEW COMPLAINT -->
-<section id="newComplaint" class="page">
-  <h2 data-en="REGISTER NEW COMPLAINT" data-mr="नवीन तक्रार नोंदवा">
-    REGISTER NEW COMPLAINT
-  </h2>
+<section class="page" id="newComplaint">
+  <h1 class="page-title">REGISTER NEW COMPLAINT</h1>
+  <p class="muted">Enter fictional information for this student-project demonstration.</p>
 
   <div class="panel">
     <form id="complaintForm">
-      <div class="form-grid">
-        <div>
-          <label data-en="Complainant Name *" data-mr="तक्रारदाराचे नाव *">Complainant Name *</label>
-          <input id="complainantName" required maxlength="80"
-            placeholder="Enter complainant name">
-        </div>
 
-        <div>
-          <label data-en="Registered By *" data-mr="तक्रार नोंदवणाऱ्याचे नाव *">Registered By *</label>
-          <input id="registeredBy" required maxlength="80"
-            placeholder="Enter registering person's name">
-        </div>
+      <label for="complainantName">Complainant Name *</label>
+      <input id="complainantName" required placeholder="Person making complaint">
 
-        <div>
-          <label data-en="Complaint Category *" data-mr="तक्रारीचा प्रकार *">Complaint Category *</label>
-          <select id="category" required>
-            <option value="">Select category</option>
-            <option>Cyber Crime</option>
-            <option>Online Fraud</option>
-            <option>Identity Theft</option>
-            <option>Social Media Related</option>
-            <option>Other</option>
-          </select>
-        </div>
+      <label for="registeredBy">Registered By *</label>
+      <input id="registeredBy" required placeholder="Person registering complaint">
 
-        <div>
-          <label data-en="Incident Date *" data-mr="घटनेची तारीख *">Incident Date *</label>
-          <input type="date" id="incidentDate" required>
-        </div>
+      <label for="category">Complaint Category *</label>
+      <select id="category" required>
+        <option value="">Select category</option>
+        <option>Online Financial Fraud</option>
+        <option>Phishing</option>
+        <option>Social Media</option>
+        <option>Identity Theft</option>
+        <option>Cyber Bullying</option>
+        <option>Other</option>
+      </select>
 
-        <div>
-          <label data-en="Complaint Status" data-mr="तक्रारीची स्थिती">Complaint Status</label>
-          <select id="status">
-            <option>Pending</option>
-            <option>Under Review</option>
-            <option>Resolved</option>
-          </select>
-        </div>
-      </div>
+      <label for="incidentDate">Incident Date *</label>
+      <input type="date" id="incidentDate" required>
 
-      <label data-en="Complaint Description (Optional)"
-        data-mr="तक्रारीचे वर्णन (ऐच्छिक)">
-        Complaint Description (Optional)
-      </label>
-      <textarea id="description" maxlength="1000"
-        placeholder="Enter description if available (optional)"></textarea>
+      <label for="status">Status *</label>
+      <select id="status" required>
+        <option>Pending</option>
+        <option>Under Review</option>
+        <option>Resolved</option>
+      </select>
 
-      <p class="small">* Required fields. Description is optional.</p>
-      <button class="primary ripple" type="submit"
-        data-en="SUBMIT COMPLAINT" data-mr="तक्रार सबमिट करा">
-        SUBMIT COMPLAINT
-      </button>
+      <label for="description">Description (Optional)</label>
+      <textarea id="description" placeholder="Enter a fictional description"></textarea>
+
+      <button class="primary-btn" type="submit">SUBMIT COMPLAINT</button>
     </form>
-    <div id="formMessage" class="notice" hidden></div>
   </div>
 </section>
 
 <!-- RECORDS -->
-<section id="records" class="page">
-  <h2 data-en="COMPLAINT RECORDS" data-mr="तक्रार नोंदी">COMPLAINT RECORDS</h2>
+<section class="page" id="records">
+  <h1 class="page-title">CASE RECORDS</h1>
+
   <div class="panel">
-    <label data-en="Search by ID or name" data-mr="आयडी किंवा नावाने शोधा">
-      Search by ID or name
-    </label>
-    <input id="searchBox" oninput="renderRecords()" placeholder="Search records...">
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Complainant</th>
-            <th>Registered By</th>
-            <th>Category</th>
-            <th>Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="recordsBody">
-          <tr><td colspan="6">No records yet.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <label for="searchInput">Search by Complaint ID or Name</label>
+    <input id="searchInput" placeholder="Search records..." oninput="renderRecords()">
+    <br><br>
+    <button class="secondary-btn" onclick="downloadCSV()">⬇ Export CSV</button>
+  </div>
+
+  <div class="panel table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Complaint ID</th>
+          <th>Complainant</th>
+          <th>Registered By</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="recordsTable">
+        <tr><td colspan="6">No records available.</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
 <!-- EVIDENCE -->
-<section id="evidence" class="page">
-  <h2 data-en="EVIDENCE INFORMATION" data-mr="पुराव्याची माहिती">EVIDENCE INFORMATION</h2>
+<section class="page" id="evidence">
+  <h1 class="page-title">EVIDENCE INFORMATION</h1>
   <div class="panel">
-    <h3>Digital Evidence - Learning Module</h3>
-    <p class="muted">
-      Learn about digital evidence handling and preservation.
-      This page does not upload or store evidence.
-    </p>
+    <h2>Digital Evidence Awareness</h2>
+    <p>This page provides educational information about digital evidence handling.</p>
     <ul>
       <li>Preserve original evidence without alteration.</li>
-      <li>Document the source and handling history.</li>
-      <li>Follow authorized forensic procedures.</li>
-      <li>Maintain evidence integrity and access records.</li>
+      <li>Record the source and date of collection.</li>
+      <li>Maintain proper documentation.</li>
+      <li>Restrict access to authorized personnel.</li>
+      <li>Follow approved evidence-handling procedures.</li>
     </ul>
     <div class="notice">
-      Do not upload real case files, personal information or evidence to this student website.
+      This student prototype does not upload, store or manage real evidence.
     </div>
   </div>
 </section>
 
 <!-- REPORTS -->
-<section id="reports" class="page">
-  <h2 data-en="REPORTS AND EXPORT" data-mr="अहवाल आणि निर्यात">REPORTS AND EXPORT</h2>
+<section class="page" id="reports">
+  <h1 class="page-title">REPORTS</h1>
   <div class="panel">
-    <h3 data-en="Complaint Report" data-mr="तक्रार अहवाल">Complaint Report</h3>
-    <p class="muted">Download the records entered during this browser session.</p>
-    <button class="primary ripple" onclick="downloadCSV()"
-      data-en="DOWNLOAD CSV REPORT" data-mr="CSV अहवाल डाउनलोड करा">
-      DOWNLOAD CSV REPORT
-    </button>
+    <h2>Complaint Summary</h2>
+    <p>Total Complaints: <strong id="reportTotal">0</strong></p>
+    <p>Pending: <strong id="reportPending">0</strong></p>
+    <p>Under Review: <strong id="reportReview">0</strong></p>
+    <p>Resolved: <strong id="reportResolved">0</strong></p>
+    <button class="secondary-btn" onclick="downloadCSV()">Export Report CSV</button>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="page">
-  <h2 data-en="ABOUT THIS PROJECT" data-mr="या प्रकल्पाबद्दल">ABOUT THIS PROJECT</h2>
+<section class="page" id="about">
+  <h1 class="page-title">ABOUT THIS PROJECT</h1>
   <div class="panel">
-    <h3>Chandrapur Cyber Police - CMS</h3>
-    <p>
-      An independent student project to demonstrate a complaint
-      registration interface, record search, dashboard and report export.
-    </p>
-    <p class="muted">
-      This is not an official police website. It has no authentication,
-      secure database, access control or evidence management.
-    </p>
+    <h2>Chandrapur Cyber Police | CMS</h2>
+    <p>This is an independent student project prototype created for educational purposes.</p>
+    <p>Its purpose is to demonstrate a basic complaint-management interface and cyber awareness information.</p>
+    <div class="notice">
+      This is not an official Maharashtra Police or Chandrapur Police website.
+      Do not submit real complaints, personal information or evidence here.
+    </div>
   </div>
 </section>
 
@@ -515,121 +587,234 @@ footer{text-align:center;color:var(--muted);padding:25px}
 <script>
 "use strict";
 
-// TEMPORARY IN-MEMORY RECORDS ONLY
+// DEMONSTRATION DATA ONLY
 let complaints = [];
 let nextId = 1;
 let currentLanguage = "en";
 
-// ENTER WEBSITE
-function enterSystem(){
+// WELCOME SCREEN
+function enterSystem() {
   const welcome = document.getElementById("welcomeScreen");
-  welcome.style.transition = "opacity .6s ease";
+
+  if (!welcome) return;
+
   welcome.style.opacity = "0";
-  setTimeout(() => {
+
+  setTimeout(function() {
     welcome.style.display = "none";
   }, 600);
 }
 
+// Make function available to the welcome button
+window.enterSystem = enterSystem;
+
 // PAGE NAVIGATION
-function showPage(pageId, clickedButton){
-  document.querySelectorAll(".page").forEach(page => {
+function showPage(pageId, clickedButton) {
+  document.querySelectorAll(".page").forEach(function(page) {
     page.classList.remove("active");
   });
 
   const target = document.getElementById(pageId);
-  if(!target) return;
 
-  target.classList.add("active");
+  if (target) {
+    target.classList.add("active");
+  }
 
-  document.querySelectorAll(".sidebar button").forEach(button => {
+  document.querySelectorAll(".nav-btn").forEach(function(button) {
     button.classList.remove("active");
   });
 
-  if(clickedButton){
+  if (clickedButton) {
     clickedButton.classList.add("active");
-  }else{
-    document.querySelectorAll(".sidebar button").forEach(button => {
-      if(button.getAttribute("onclick")?.includes("'" + pageId + "'")){
+  } else {
+    document.querySelectorAll(".nav-btn").forEach(function(button) {
+      if (button.getAttribute("onclick") &&
+          button.getAttribute("onclick").includes("'" + pageId + "'")) {
         button.classList.add("active");
       }
     });
   }
 
-  if(pageId === "dashboard") updateDashboard();
-  if(pageId === "records") renderRecords();
+  updateDashboard();
 }
 
-// LANGUAGE SWITCH
-function toggleLanguages(){
+// LANGUAGE TOGGLE
+function toggleLanguages() {
   currentLanguage = currentLanguage === "en" ? "mr" : "en";
 
-  document.querySelectorAll("[data-en]").forEach(element => {
-    const translation = element.getAttribute(
-      currentLanguage === "en" ? "data-en" : "data-mr"
-    );
-    if(translation !== null) element.textContent = translation;
+  document.querySelectorAll("[data-en][data-mr]").forEach(function(element) {
+    element.textContent = element.getAttribute("data-" + currentLanguage);
   });
 
   document.getElementById("languageButton").textContent =
     currentLanguage === "en" ? "मराठी" : "English";
 }
 
-// COMPLAINT FORM
-document.getElementById("complaintForm").addEventListener("submit",function(event){
+// FORM SUBMISSION
+document.getElementById("complaintForm").addEventListener("submit", function(event) {
   event.preventDefault();
 
   const complaint = {
-    id:"CMP-" + String(nextId++).padStart(4,"0"),
-    complainant:document.getElementById("complainantName").value.trim(),
-    registeredBy:document.getElementById("registeredBy").value.trim(),
-    category:document.getElementById("category").value,
-    date:document.getElementById("incidentDate").value,
-    status:document.getElementById("status").value,
-    description:document.getElementById("description").value.trim()
+    id: "CMP-" + String(nextId).padStart(4, "0"),
+    complainant: document.getElementById("complainantName").value.trim(),
+    registeredBy: document.getElementById("registeredBy").value.trim(),
+    category: document.getElementById("category").value,
+    date: document.getElementById("incidentDate").value,
+    status: document.getElementById("status").value,
+    description: document.getElementById("description").value.trim()
   };
 
-  if(!complaint.complainant || !complaint.registeredBy ||
-     !complaint.category || !complaint.date){
-    alert("Please complete all required fields.");
+  if (!complaint.complainant || !complaint.registeredBy ||
+      !complaint.category || !complaint.date) {
+    alert("Please fill in all required fields.");
     return;
   }
 
   complaints.push(complaint);
-
-  const message = document.getElementById("formMessage");
-  message.hidden = false;
-  message.textContent =
-    "Complaint registered successfully. Reference ID: " + complaint.id;
+  nextId++;
 
   this.reset();
   updateDashboard();
   renderRecords();
+
+  alert("Demonstration record added: " + complaint.id);
+  showPage("records");
 });
 
-// DASHBOARD COUNTS
-function updateDashboard(){
-  document.getElementById("totalCount").textContent = complaints.length;
-  document.getElementById("pendingCount").textContent =
-    complaints.filter(c => c.status === "Pending").length;
-  document.getElementById("reviewCount").textContent =
-    complaints.filter(c => c.status === "Under Review").length;
-  document.getElementById("resolvedCount").textContent =
-    complaints.filter(c => c.status === "Resolved").length;
+// UPDATE DASHBOARD
+function updateDashboard() {
+  const total = complaints.length;
+  const pending = complaints.filter(c => c.status === "Pending").length;
+  const review = complaints.filter(c => c.status === "Under Review").length;
+  const resolved = complaints.filter(c => c.status === "Resolved").length;
+
+  document.getElementById("totalCount").textContent = total;
+  document.getElementById("pendingCount").textContent = pending;
+  document.getElementById("reviewCount").textContent = review;
+  document.getElementById("resolvedCount").textContent = resolved;
+
+  document.getElementById("reportTotal").textContent = total;
+  document.getElementById("reportPending").textContent = pending;
+  document.getElementById("reportReview").textContent = review;
+  document.getElementById("reportResolved").textContent = resolved;
 }
 
-// RECORDS AND SEARCH
-function renderRecords(){
-  const body = document.getElementById("recordsBody");
-  const search = (document.getElementById("searchBox")?.value || "").toLowerCase();
+// DISPLAY RECORDS
+function renderRecords() {
+  const table = document.getElementById("recordsTable");
+  const search = document.getElementById("searchInput").value.toLowerCase();
 
-  const filtered = complaints.filter(c =>
-    c.id.toLowerCase().includes(search) ||
-    c.complainant.toLowerCase().includes(search) ||
-    c.registeredBy.toLowerCase().includes(search)
-  );
+  const filtered = complaints.filter(function(c) {
+    return c.id.toLowerCase().includes(search) ||
+      c.complainant.toLowerCase().includes(search) ||
+      c.registeredBy.toLowerCase().includes(search);
+  });
 
-  body.replaceChildren();
+  if (filtered.length === 0) {
+    table.innerHTML = '<tr><td colspan="6">No matching records.</td></tr>';
+    return;
+  }
 
-  if(filtered.length === 0){
+  table.innerHTML = "";
+
+  filtered.forEach(function(c) {
     const row = document.createElement("tr");
-    const cell = documen
+
+    [c.id, c.complainant, c.registeredBy, c.category, c.date, c.status]
+      .forEach(function(value) {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+        row.appendChild(cell);
+      });
+
+    table.appendChild(row);
+  });
+}
+
+// EXPORT CSV
+function downloadCSV() {
+  if (complaints.length === 0) {
+    alert("There are no demonstration records to export.");
+    return;
+  }
+
+  const headers = [
+    "Complaint ID", "Complainant Name", "Registered By",
+    "Category", "Date", "Status", "Description"
+  ];
+
+  const rows = complaints.map(function(c) {
+    return [
+      c.id, c.complainant, c.registeredBy,
+      c.category, c.date, c.status, c.description
+    ];
+  });
+
+  function escapeCSV(value) {
+    return '"' + String(value).replace(/"/g, '""') + '"';
+  }
+
+  const csv = [headers, ...rows]
+    .map(row => row.map(escapeCSV).join(","))
+    .join("\n");
+
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "demonstration-complaints.csv";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+// MATRIX BACKGROUND
+(function startMatrix() {
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
+
+  let width, height, columns, drops;
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    columns = Math.floor(width / 18);
+    drops = Array(columns).fill(1);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  function draw() {
+    ctx.fillStyle = "rgba(5,11,22,0.08)";
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = "#39ff88";
+    ctx.font = "14px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const character = Math.random() > 0.5 ? "1" : "0";
+
+      ctx.fillText(character, i * 18, drops[i] * 18);
+
+      if (drops[i] * 18 > height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+
+      drops[i]++;
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+})();
+
+// INITIAL PAGE DATA
+updateDashboard();
+renderRecords();
+
+</script>
+</body>
+</html>
