@@ -1,1 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Police Complaint Management System</title>
 
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f4f8;
+  color: #243247;
+}
+
+header {
+  background: #142d46;
+  color: white;
+  padding: 22px;
+}
+
+header h2 {
+  margin: 0 0 8px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+button {
+  padding: 11px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #1769aa;
+  color: white;
+  font-weight: bold;
+}
+
+.container {
+  padding: 22px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #00000012;
+}
+
+.card h3 {
+  color: #64748b;
+  font-size: 15px;
+}
+
+.number {
+  font-size: 30px;
+  font-weight: bold;
+  color: #142d46;
+}
+
+.section {
+  background: white;
+  padding: 22px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #64748b;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2 id="title">Police Complaint Management System</h2>
+  <div id="subtitle">पोलीस तक्रार व्यवस्थापन प्रणाली</div>
+
+  <nav>
+    <strong id="station">Police Station Dashboard</strong>
+    <button onclick="changeLanguage()" id="langBtn">
+      मराठी
+    </button>
+  </nav>
+</header>
+
+<div class="container">
+
+  <h2 id="welcome">Dashboard Overview</h2>
+
+  <div class="stats">
+
+    <div class="card">
+      <h3 id="totalLabel">Total Complaints</h3>
+      <div class="number">125</div>
+    </div>
+
+    <div class="card">
+      <h3 id="pendingLabel">Pending Complaints</h3>
+      <div class="number">42</div>
+    </div>
+
+    <div class="card">
+      <h3 id="reviewLabel">Under Review</h3>
+      <div class="number">35</div>
+    </div>
+
+    <div class="card">
+      <h3 id="resolvedLabel">Resolved Complaints</h3>
+      <div class="number">48</div>
+    </div>
+
+  </div>
+
+  <div class="section">
+    <h2 id="quickTitle">Quick Actions</h2>
+    <button id="newBtn">+ Register New Complaint</button>
+    <button id="recordsBtn">View Complaint Records</button>
+  </div>
+
+  <div class="section">
+    <h2 id="noticeTitle">Project Information</h2>
+    <p id="notice">
+      This is a demonstration dashboard.
+      All displayed numbers are fictional.
+      No real police records are stored.
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  Police Complaint Management System | Demo Project
+</footer>
+
+<script>
+
+let currentLanguage = "en";
+
+function changeLanguage() {
+
+  if (currentLanguage === "en") {
+
+    currentLanguage = "mr";
+
+    document.getElementById("title").innerText =
+      "पोलीस तक्रार व्यवस्थापन प्रणाली";
+
+    document.getElementById("subtitle").innerText =
+      "Police Complaint Management System";
+
+    document.getElementById("station").innerText =
+      "पोलीस स्टेशन डॅशबोर्ड";
+
+    document.getElementById("welcome").innerText =
+      "डॅशबोर्ड";
+
+    document.getElementById("totalLabel").innerText =
+      "एकूण तक्रारी";
+
+    document.getElementById("pendingLabel").innerText =
+      "प्रलंबित तक्रारी";
+
+    document.getElementById("reviewLabel").innerText =
+      "तपासणी सुरू";
+
+    document.getElementById("resolvedLabel").innerText =
+      "निकाली तक्रारी";
+
+    document.getElementById("quickTitle").innerText =
+      "जलद पर्याय";
+
+    document.getElementById("newBtn").innerText =
+      "+ नवीन तक्रार नोंदवा";
+
+    document.getElementById("recordsBtn").innerText =
+      "तक्रारी पहा";
+
+    document.getElementById("noticeTitle").innerText =
+      "प्रकल्पाची माहिती";
+
+    document.getElementById("notice").innerText =
+      "हे फक्त प्रात्यक्षिक डॅशबोर्ड आहे. सर्व आकडे काल्पनिक आहेत.";
+
+    document.getElementById("langBtn").innerText =
+      "English";
+
+  } else {
+
+    location.reload();
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
