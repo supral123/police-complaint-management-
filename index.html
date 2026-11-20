@@ -6,12 +6,11 @@
 <title>Chandrapur Cyber Police | CMS</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
 
 :root {
   --green:#39ff88;
   --cyan:#00eaff;
-  --blue:#62baff;
   --bg:#050b16;
   --panel:#0d192b;
   --text:#e7f7ff;
@@ -31,11 +30,7 @@ body {
 
 button,input,select,textarea { font:inherit; }
 
-button {
-  cursor:pointer;
-  border:0;
-  transition:.25s;
-}
+button { cursor:pointer; transition:.25s; }
 
 button:hover {
   transform:translateY(-3px);
@@ -65,12 +60,12 @@ button:hover {
 
 .welcome-content {
   max-width:850px;
-  animation:welcomeFloat 3s ease-in-out infinite;
+  animation:float 3s ease-in-out infinite;
 }
 
-@keyframes welcomeFloat {
-  0%,100% { transform:translateY(0) rotateX(0); }
-  50% { transform:translateY(-12px) rotateX(2deg); }
+@keyframes float {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-12px); }
 }
 
 .welcome-shield {
@@ -82,21 +77,17 @@ button:hover {
   color:var(--green);
   font-family:Orbitron,sans-serif;
   letter-spacing:5px;
-  font-size:15px;
 }
 
 .welcome h1 {
   font-family:Orbitron,sans-serif;
-  font-size:clamp(28px,6vw,55px);
-  color:#eafaff;
-  text-shadow:0 0 12px var(--cyan),0 0 35px var(--blue);
+  font-size:clamp(27px,6vw,53px);
+  color:white;
+  text-shadow:0 0 12px var(--cyan),0 0 35px #62baff;
   line-height:1.4;
 }
 
-.welcome p {
-  color:#d8e9f8;
-  font-size:22px;
-}
+.welcome p { font-size:22px; }
 
 .enter-btn {
   margin-top:25px;
@@ -105,7 +96,6 @@ button:hover {
   color:#052015;
   border-radius:8px;
   font-family:Orbitron,sans-serif;
-  font-size:16px;
   box-shadow:0 0 25px #39ff88;
 }
 
@@ -118,7 +108,6 @@ header {
   gap:12px;
   background:#071426ee;
   border-bottom:1px solid #00eaff55;
-  box-shadow:0 5px 25px #00eaff15;
 }
 
 .brand {
@@ -134,18 +123,12 @@ header {
 
 .brand h2 {
   font-family:Orbitron,sans-serif;
-  font-size:17px;
+  font-size:16px;
   margin:0;
   color:var(--cyan);
 }
 
 .brand small { color:var(--muted); }
-
-.top-actions {
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
 
 .small-btn {
   padding:9px 15px;
@@ -190,7 +173,6 @@ header {
   background:#102d40;
   color:var(--green);
   border-color:#39ff8866;
-  box-shadow:0 0 15px #39ff8822;
 }
 
 main { padding:25px; min-width:0; }
@@ -211,7 +193,6 @@ main { padding:25px; min-width:0; }
   font-family:Orbitron,sans-serif;
   font-size:23px;
   color:var(--cyan);
-  margin-top:0;
 }
 
 .muted { color:var(--muted); }
@@ -230,11 +211,10 @@ main { padding:25px; min-width:0; }
   padding:22px;
   box-shadow:0 10px 25px #0008;
   transition:.3s;
-  transform-style:preserve-3d;
 }
 
 .stat-card:hover {
-  transform:perspective(700px) rotateY(5deg) rotateX(4deg) translateY(-6px);
+  transform:perspective(700px) rotateY(5deg) translateY(-6px);
   border-color:var(--green);
   box-shadow:0 0 25px #39ff8833;
 }
@@ -283,7 +263,15 @@ input:focus,select:focus,textarea:focus {
   box-shadow:0 0 10px #00eaff33;
 }
 
-textarea { min-height:110px; resize:vertical; }
+input[type="file"] {
+  padding:10px;
+  cursor:pointer;
+}
+
+textarea {
+  min-height:110px;
+  resize:vertical;
+}
 
 .primary-btn {
   padding:12px 22px;
@@ -307,7 +295,7 @@ textarea { min-height:110px; resize:vertical; }
 table {
   width:100%;
   border-collapse:collapse;
-  min-width:650px;
+  min-width:700px;
 }
 
 th,td {
@@ -321,17 +309,15 @@ th {
   background:#10243a;
 }
 
-.status {
-  color:var(--green);
-  font-weight:bold;
+.evidence-thumb {
+  width:65px;
+  height:55px;
+  object-fit:cover;
+  border-radius:6px;
+  border:1px solid var(--cyan);
 }
 
-footer {
-  text-align:center;
-  padding:20px;
-  color:var(--muted);
-  border-top:1px solid #00eaff33;
-}
+.no-photo { color:var(--muted); font-size:14px; }
 
 .notice {
   border-left:4px solid var(--green);
@@ -339,6 +325,13 @@ footer {
   padding:13px;
   color:#c9ffe1;
   border-radius:5px;
+}
+
+footer {
+  text-align:center;
+  padding:20px;
+  color:var(--muted);
+  border-top:1px solid #00eaff33;
 }
 
 @media(max-width:750px) {
@@ -351,11 +344,6 @@ footer {
   }
   .sidebar h3 { grid-column:1/-1; }
   main { padding:15px; }
-}
-
-@media(max-width:430px) {
-  .sidebar { grid-template-columns:1fr 1fr; }
-  .brand h2 { font-size:13px; }
 }
 </style>
 </head>
@@ -371,7 +359,7 @@ footer {
     <p class="welcome-tag">CYBER SECURITY SYSTEM</p>
     <h1>WELCOME TO<br>CHANDRAPUR CYBER POLICE</h1>
     <p>Cyber Awareness &amp; Complaint Management</p>
-    <button class="enter-btn" id="enterButton" onclick="window.enterSystem()">
+    <button class="enter-btn" onclick="window.enterSystem()">
       ENTER SYSTEM →
     </button>
   </div>
@@ -385,9 +373,7 @@ footer {
       <small>Complaint Management System | Student Project</small>
     </div>
   </div>
-  <div class="top-actions">
-    <button class="small-btn" onclick="toggleLanguages()" id="languageButton">मराठी</button>
-  </div>
+  <button class="small-btn" onclick="toggleLanguages()" id="languageButton">मराठी</button>
 </header>
 
 <div class="layout">
@@ -395,38 +381,19 @@ footer {
 <aside class="sidebar">
   <h3 data-en="MAIN MENU" data-mr="मुख्य मेनू">MAIN MENU</h3>
 
-  <button class="nav-btn active" onclick="showPage('dashboard',this)">
-    🏠 <span data-en="Dashboard" data-mr="डॅशबोर्ड">Dashboard</span>
-  </button>
-
-  <button class="nav-btn" onclick="showPage('newComplaint',this)">
-    📝 <span data-en="New Complaint" data-mr="नवीन तक्रार">New Complaint</span>
-  </button>
-
-  <button class="nav-btn" onclick="showPage('records',this)">
-    📁 <span data-en="Case Records" data-mr="तक्रार नोंदी">Case Records</span>
-  </button>
-
-  <button class="nav-btn" onclick="showPage('evidence',this)">
-    🔍 <span data-en="Evidence" data-mr="पुरावा">Evidence</span>
-  </button>
-
-  <button class="nav-btn" onclick="showPage('reports',this)">
-    📊 <span data-en="Reports" data-mr="अहवाल">Reports</span>
-  </button>
-
-  <button class="nav-btn" onclick="showPage('about',this)">
-    ℹ️ <span data-en="About Project" data-mr="प्रकल्पाबद्दल">About Project</span>
-  </button>
+  <button class="nav-btn active" onclick="showPage('dashboard',this)">🏠 Dashboard</button>
+  <button class="nav-btn" onclick="showPage('newComplaint',this)">📝 New Complaint</button>
+  <button class="nav-btn" onclick="showPage('records',this)">📁 Case Records</button>
+  <button class="nav-btn" onclick="showPage('evidence',this)">🔍 Evidence</button>
+  <button class="nav-btn" onclick="showPage('reports',this)">📊 Reports</button>
+  <button class="nav-btn" onclick="showPage('about',this)">ℹ️ About Project</button>
 </aside>
 
 <main>
 
 <!-- DASHBOARD -->
 <section class="page active" id="dashboard">
-  <h1 class="page-title" data-en="CYBER SECURITY DASHBOARD" data-mr="सायबर सुरक्षा डॅशबोर्ड">
-    CYBER SECURITY DASHBOARD
-  </h1>
+  <h1 class="page-title">CYBER SECURITY DASHBOARD</h1>
   <p class="muted">Welcome to the Cyber Complaint Management System.</p>
 
   <div class="cards">
@@ -461,7 +428,7 @@ footer {
 <!-- NEW COMPLAINT -->
 <section class="page" id="newComplaint">
   <h1 class="page-title">REGISTER NEW COMPLAINT</h1>
-  <p class="muted">Enter fictional information for this student-project demonstration.</p>
+  <p class="muted">Use fictional information for this student-project demonstration.</p>
 
   <div class="panel">
     <form id="complaintForm">
@@ -493,6 +460,23 @@ footer {
         <option>Resolved</option>
       </select>
 
+      <!-- OPTIONAL EVIDENCE PHOTO -->
+      <label for="evidencePhoto">Evidence Photo (Optional)</label>
+      <input
+        type="file"
+        id="evidencePhoto"
+        accept="image/*"
+        onchange="previewEvidence(event)"
+      >
+
+      <p class="muted">You can submit the complaint without selecting a photo.</p>
+
+      <img
+        id="evidencePreview"
+        alt="Evidence photo preview"
+        style="display:none;max-width:220px;max-height:180px;object-fit:contain;margin-top:12px;border-radius:8px;border:1px solid #00eaff;"
+      >
+
       <label for="description">Description (Optional)</label>
       <textarea id="description" placeholder="Enter a fictional description"></textarea>
 
@@ -501,7 +485,7 @@ footer {
   </div>
 </section>
 
-<!-- RECORDS -->
+<!-- CASE RECORDS -->
 <section class="page" id="records">
   <h1 class="page-title">CASE RECORDS</h1>
 
@@ -522,21 +506,22 @@ footer {
           <th>Category</th>
           <th>Date</th>
           <th>Status</th>
+          <th>Evidence Photo</th>
         </tr>
       </thead>
       <tbody id="recordsTable">
-        <tr><td colspan="6">No records available.</td></tr>
+        <tr><td colspan="7">No records available.</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<!-- EVIDENCE -->
+<!-- EVIDENCE INFORMATION -->
 <section class="page" id="evidence">
   <h1 class="page-title">EVIDENCE INFORMATION</h1>
   <div class="panel">
     <h2>Digital Evidence Awareness</h2>
-    <p>This page provides educational information about digital evidence handling.</p>
+    <p>This section provides educational information about digital evidence.</p>
     <ul>
       <li>Preserve original evidence without alteration.</li>
       <li>Record the source and date of collection.</li>
@@ -545,7 +530,7 @@ footer {
       <li>Follow approved evidence-handling procedures.</li>
     </ul>
     <div class="notice">
-      This student prototype does not upload, store or manage real evidence.
+      This student prototype does not manage or store real case evidence.
     </div>
   </div>
 </section>
@@ -587,15 +572,14 @@ footer {
 <script>
 "use strict";
 
-// DEMONSTRATION DATA ONLY
 let complaints = [];
 let nextId = 1;
 let currentLanguage = "en";
+let selectedEvidence = "";
 
 // WELCOME SCREEN
 function enterSystem() {
   const welcome = document.getElementById("welcomeScreen");
-
   if (!welcome) return;
 
   welcome.style.opacity = "0";
@@ -605,7 +589,6 @@ function enterSystem() {
   }, 600);
 }
 
-// Make function available to the welcome button
 window.enterSystem = enterSystem;
 
 // PAGE NAVIGATION
@@ -615,10 +598,7 @@ function showPage(pageId, clickedButton) {
   });
 
   const target = document.getElementById(pageId);
-
-  if (target) {
-    target.classList.add("active");
-  }
+  if (target) target.classList.add("active");
 
   document.querySelectorAll(".nav-btn").forEach(function(button) {
     button.classList.remove("active");
@@ -626,19 +606,12 @@ function showPage(pageId, clickedButton) {
 
   if (clickedButton) {
     clickedButton.classList.add("active");
-  } else {
-    document.querySelectorAll(".nav-btn").forEach(function(button) {
-      if (button.getAttribute("onclick") &&
-          button.getAttribute("onclick").includes("'" + pageId + "'")) {
-        button.classList.add("active");
-      }
-    });
   }
 
   updateDashboard();
 }
 
-// LANGUAGE TOGGLE
+// LANGUAGE
 function toggleLanguages() {
   currentLanguage = currentLanguage === "en" ? "mr" : "en";
 
@@ -650,7 +623,51 @@ function toggleLanguages() {
     currentLanguage === "en" ? "मराठी" : "English";
 }
 
-// FORM SUBMISSION
+// IMAGE PREVIEW
+function previewEvidence(event) {
+  const file = event.target.files[0];
+  const preview = document.getElementById("evidencePreview");
+
+  selectedEvidence = "";
+
+  if (!file) {
+    preview.style.display = "none";
+    preview.removeAttribute("src");
+    return;
+  }
+
+  if (!file.type.startsWith("image/")) {
+    alert("Please select an image file.");
+    event.target.value = "";
+    preview.style.display = "none";
+    return;
+  }
+
+  // Keep image files reasonably small for this browser-only prototype.
+  if (file.size > 2 * 1024 * 1024) {
+    alert("Please choose an image smaller than 2 MB.");
+    event.target.value = "";
+    preview.style.display = "none";
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    selectedEvidence = e.target.result;
+    preview.src = selectedEvidence;
+    preview.style.display = "block";
+  };
+
+  reader.onerror = function() {
+    alert("Could not read this image. Please try another one.");
+    event.target.value = "";
+  };
+
+  reader.readAsDataURL(file);
+}
+
+// SUBMIT COMPLAINT
 document.getElementById("complaintForm").addEventListener("submit", function(event) {
   event.preventDefault();
 
@@ -661,7 +678,8 @@ document.getElementById("complaintForm").addEventListener("submit", function(eve
     category: document.getElementById("category").value,
     date: document.getElementById("incidentDate").value,
     status: document.getElementById("status").value,
-    description: document.getElementById("description").value.trim()
+    description: document.getElementById("description").value.trim(),
+    evidence: selectedEvidence
   };
 
   if (!complaint.complainant || !complaint.registeredBy ||
@@ -674,6 +692,12 @@ document.getElementById("complaintForm").addEventListener("submit", function(eve
   nextId++;
 
   this.reset();
+  selectedEvidence = "";
+
+  const preview = document.getElementById("evidencePreview");
+  preview.style.display = "none";
+  preview.removeAttribute("src");
+
   updateDashboard();
   renderRecords();
 
@@ -681,7 +705,7 @@ document.getElementById("complaintForm").addEventListener("submit", function(eve
   showPage("records");
 });
 
-// UPDATE DASHBOARD
+// DASHBOARD
 function updateDashboard() {
   const total = complaints.length;
   const pending = complaints.filter(c => c.status === "Pending").length;
@@ -699,7 +723,7 @@ function updateDashboard() {
   document.getElementById("reportResolved").textContent = resolved;
 }
 
-// DISPLAY RECORDS
+// CASE RECORDS
 function renderRecords() {
   const table = document.getElementById("recordsTable");
   const search = document.getElementById("searchInput").value.toLowerCase();
@@ -710,28 +734,52 @@ function renderRecords() {
       c.registeredBy.toLowerCase().includes(search);
   });
 
+  table.innerHTML = "";
+
   if (filtered.length === 0) {
-    table.innerHTML = '<tr><td colspan="6">No matching records.</td></tr>';
+    table.innerHTML = '<tr><td colspan="7">No matching records.</td></tr>';
     return;
   }
-
-  table.innerHTML = "";
 
   filtered.forEach(function(c) {
     const row = document.createElement("tr");
 
-    [c.id, c.complainant, c.registeredBy, c.category, c.date, c.status]
-      .forEach(function(value) {
-        const cell = document.createElement("td");
-        cell.textContent = value;
-        row.appendChild(cell);
-      });
+    const values = [
+      c.id,
+      c.complainant,
+      c.registeredBy,
+      c.category,
+      c.date,
+      c.status
+    ];
 
+    values.forEach(function(value) {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
+
+    const evidenceCell = document.createElement("td");
+
+    if (c.evidence) {
+      const image = document.createElement("img");
+      image.src = c.evidence;
+      image.alt = "Evidence thumbnail";
+      image.className = "evidence-thumb";
+      evidenceCell.appendChild(image);
+    } else {
+      const noPhoto = document.createElement("span");
+      noPhoto.className = "no-photo";
+      noPhoto.textContent = "No photo";
+      evidenceCell.appendChild(noPhoto);
+    }
+
+    row.appendChild(evidenceCell);
     table.appendChild(row);
   });
 }
 
-// EXPORT CSV
+// CSV EXPORT
 function downloadCSV() {
   if (complaints.length === 0) {
     alert("There are no demonstration records to export.");
@@ -739,14 +787,26 @@ function downloadCSV() {
   }
 
   const headers = [
-    "Complaint ID", "Complainant Name", "Registered By",
-    "Category", "Date", "Status", "Description"
+    "Complaint ID",
+    "Complainant Name",
+    "Registered By",
+    "Category",
+    "Date",
+    "Status",
+    "Description",
+    "Evidence Photo Attached"
   ];
 
   const rows = complaints.map(function(c) {
     return [
-      c.id, c.complainant, c.registeredBy,
-      c.category, c.date, c.status, c.description
+      c.id,
+      c.complainant,
+      c.registeredBy,
+      c.category,
+      c.date,
+      c.status,
+      c.description,
+      c.evidence ? "Yes" : "No"
     ];
   });
 
@@ -758,7 +818,10 @@ function downloadCSV() {
     .map(row => row.map(escapeCSV).join(","))
     .join("\n");
 
-  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const blob = new Blob([csv], {
+    type:"text/csv;charset=utf-8;"
+  });
+
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
 
@@ -774,47 +837,4 @@ function downloadCSV() {
   const canvas = document.getElementById("matrix");
   const ctx = canvas.getContext("2d");
 
-  let width, height, columns, drops;
-
-  function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-    columns = Math.floor(width / 18);
-    drops = Array(columns).fill(1);
-  }
-
-  resize();
-  window.addEventListener("resize", resize);
-
-  function draw() {
-    ctx.fillStyle = "rgba(5,11,22,0.08)";
-    ctx.fillRect(0, 0, width, height);
-
-    ctx.fillStyle = "#39ff88";
-    ctx.font = "14px monospace";
-
-    for (let i = 0; i < drops.length; i++) {
-      const character = Math.random() > 0.5 ? "1" : "0";
-
-      ctx.fillText(character, i * 18, drops[i] * 18);
-
-      if (drops[i] * 18 > height && Math.random() > 0.975) {
-        drops[i] = 0;
-      }
-
-      drops[i]++;
-    }
-
-    requestAnimationFrame(draw);
-  }
-
-  draw();
-})();
-
-// INITIAL PAGE DATA
-updateDashboard();
-renderRecords();
-
-</script>
-</body>
-</html>
+  let width
